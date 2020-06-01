@@ -14,7 +14,14 @@ public class MinecraftChatService extends ChatService {
     }
 
     @Override
+    public void serverStopped(MinecraftServer server) {
+        this.minecraftServer = null;
+    }
+
+    @Override
     public void sendMessage(Message message) {
-        this.minecraftServer.getPlayerManager().sendToAll(new LiteralText(message.getContent()));
+        if (this.minecraftServer != null) {
+            this.minecraftServer.getPlayerManager().sendToAll(new LiteralText(message.getContent()));
+        }
     }
 }

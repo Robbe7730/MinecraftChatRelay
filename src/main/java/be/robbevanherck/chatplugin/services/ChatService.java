@@ -9,10 +9,14 @@ public abstract class ChatService {
     Set<MessageReceivedHandler> handlers;
 
     /**
-     * Called on plugin init, useful for adding callbacks
+     * Called when the server starts
      */
     public abstract void serverStarted(MinecraftServer server);
 
+    /**
+     * Called when the server stops
+     */
+    public abstract void serverStopped(MinecraftServer server);
     /**
      * Add a MessageReceivedHandler to be called when a message is received
      * @param handler The MessageReceivedHandler to be added

@@ -19,10 +19,16 @@ public class DiscordRepository {
      * @param newChannel The new channel
      */
     public static void setChannel(MessageChannel newChannel) {
-        if (channel != null) {
-            channel.sendMessage("I must go, " + newChannel.getName() + " needs me").queue();
+        if (newChannel == null) {
+            if (channel != null) {
+                channel.sendMessage("I must go, see you on the other side!").queue();
+            }
+        } else {
+            if (channel != null) {
+                channel.sendMessage("I must go, " + newChannel.getName() + " needs me").queue();
+            }
+            channel = newChannel;
+            channel.sendMessage("Hello there").queue();
         }
-        channel = newChannel;
-        channel.sendMessage("Hello there").queue();
     }
 }
