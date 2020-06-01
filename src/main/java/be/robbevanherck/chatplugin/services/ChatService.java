@@ -1,13 +1,12 @@
 package be.robbevanherck.chatplugin.services;
 
 import be.robbevanherck.chatplugin.entities.Message;
+import be.robbevanherck.chatplugin.repositories.ChatServiceRepository;
 import net.minecraft.server.MinecraftServer;
 
 import java.util.Set;
 
 public abstract class ChatService {
-    Set<MessageReceivedHandler> handlers;
-
     /**
      * Called when the server starts
      */
@@ -17,12 +16,15 @@ public abstract class ChatService {
      * Called when the server stops
      */
     public abstract void serverStopped(MinecraftServer server);
+
     /**
-     * Add a MessageReceivedHandler to be called when a message is received
-     * @param handler The MessageReceivedHandler to be added
+     * Forward a received message
+     * @param message The message to be forwarded
      */
-    public void addMessageReceivedHandler(MessageReceivedHandler handler) {
-        handlers.add(handler);
+    public void onMessageReceived(Message message) {
+        ChatServiceRepository.getChatServices().stream()
+                .filter(service -> !message.getOrigin().equals(service))
+                .forEach(service -> service.sendMessage(message));
     }
 
     /**

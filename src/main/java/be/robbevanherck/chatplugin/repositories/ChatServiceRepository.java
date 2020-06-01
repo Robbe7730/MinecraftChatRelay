@@ -1,5 +1,6 @@
 package be.robbevanherck.chatplugin.repositories;
 
+import be.robbevanherck.chatplugin.entities.Message;
 import be.robbevanherck.chatplugin.services.ChatService;
 
 import java.util.ArrayList;

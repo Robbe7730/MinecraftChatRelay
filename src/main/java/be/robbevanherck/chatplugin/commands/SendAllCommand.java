@@ -14,13 +14,13 @@ public class SendAllCommand {
         commandDispatcher.register(CommandManager.literal("sendall").then(
                 CommandManager.argument("text", string()).executes(ctx -> {
                     ChatServiceRepository.getChatServices().forEach(chatService -> chatService.sendMessage(
-                            new Message("ChatPlugin", getString(ctx, "text"))
+                            new Message("DefinitelyNotChatPlugin", getString(ctx, "text"), null)
                     ));
                     return 1;
                 })
                 ).executes( ctx -> {
                     ChatServiceRepository.getChatServices().forEach(chatService -> chatService.sendMessage(
-                            new Message("ChatPlugin", "This is a test message")
+                            new Message("ChatPlugin", "This is a test message", null)
                     ));
                     return 1;
                 }

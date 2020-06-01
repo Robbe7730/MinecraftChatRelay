@@ -19,12 +19,11 @@ public class DiscordChatService extends ChatService {
         System.err.println(token);
         try {
             JDABuilder builder = new JDABuilder(token);
-            builder.setDisabledCacheFlags(EnumSet.of(CacheFlag.ACTIVITY));
             builder.setActivity(Activity.playing("Minecraft: " + server.getServerMotd()));
 
             JDA jda = builder.build();
 
-            jda.addEventListener(new DiscordMessageListener());
+            jda.addEventListener(new DiscordMessageListener(this));
         } catch (LoginException ignored) {
             //TODO
         }
@@ -46,6 +45,6 @@ public class DiscordChatService extends ChatService {
         if (DiscordRepository.getChannel() == null) {
             return;
         }
-        DiscordRepository.getChannel().sendMessage("<" + message.getUsername() + "> " + message.getContent()).queue();
+        DiscordRepository.getChannel().sendMessage(message.toString()).queue();
     }
 }
