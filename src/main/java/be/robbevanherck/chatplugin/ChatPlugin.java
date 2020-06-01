@@ -1,18 +1,22 @@
 package be.robbevanherck.chatplugin;
 
-import be.robbevanherck.chatplugin.entities.Message;
+import be.robbevanherck.chatplugin.commands.SendAllCommand;
+import be.robbevanherck.chatplugin.repositories.ChatServiceRepository;
 import be.robbevanherck.chatplugin.services.ChatService;
 import be.robbevanherck.chatplugin.services.minecraft.MinecraftChatService;
 import net.fabricmc.api.ModInitializer;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 
 public class ChatPlugin implements ModInitializer {
-    List<ChatService> chatServices = new ArrayList<>();
-
     @Override
     public void onInitialize() {
-        chatServices.forEach(ChatService::init);
+        // Add the chat services
+        ChatServiceRepository.addChatService(new MinecraftChatService());
+
+        // Initialize them
+        ChatServiceRepository.getChatServices().forEach(ChatService::init);
+
+        // Register the commands
+        CommandRegistrationCallback.EVENT.register(SendAllCommand::register);
     }
 }
