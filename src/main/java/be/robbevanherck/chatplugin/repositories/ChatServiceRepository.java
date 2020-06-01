@@ -26,4 +26,12 @@ public class ChatServiceRepository {
     public static void addChatService(ChatService service) {
         getChatServices().add(service);
     }
+
+    /**
+     * Remove a chat service
+     * @param service The service to be removed
+     */
+    public static void removeChatService(ChatService service) {
+        getChatServices().remove(service);
+    }
 }
