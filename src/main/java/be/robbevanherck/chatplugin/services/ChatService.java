@@ -1,6 +1,7 @@
 package be.robbevanherck.chatplugin.services;
 
 import be.robbevanherck.chatplugin.entities.Message;
+import net.minecraft.server.MinecraftServer;
 
 import java.util.Set;
 
@@ -10,7 +11,7 @@ public abstract class ChatService {
     /**
      * Called on plugin init, useful for adding callbacks
      */
-    public abstract void init();
+    public abstract void serverStarted(MinecraftServer server);
 
     /**
      * Add a MessageReceivedHandler to be called when a message is received
