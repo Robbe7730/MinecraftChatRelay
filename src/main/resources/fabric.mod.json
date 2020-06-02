@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "chatplugin",
-  "version": "${version}",
+  "version": "0.1.0",
 
   "name": "Chat Relay",
   "description": "Integrate a Minecraft server with a chatting application, like Discord",
@@ -15,13 +15,15 @@
   "license": "CC0-1.0",
   "icon": "assets/chatplugin/icon.png",
 
-  "environment": "*",
+  "environment": "server",
   "entrypoints": {
     "main": [
       "be.robbevanherck.chatplugin.ChatPlugin"
     ]
   },
-  "mixins": [],
+  "mixins": [
+    "chatplugin.mixins.json"
+  ],
 
   "depends": {
     "fabricloader": ">=0.7.4",
