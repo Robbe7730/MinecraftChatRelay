@@ -2,14 +2,12 @@ package be.robbevanherck.chatplugin.entities;
 
 import be.robbevanherck.chatplugin.services.ChatService;
 
-public class Message {
+public abstract class Message {
     String content;
-    String username;
     ChatService origin;
 
-    public Message(String username, String content, ChatService origin) {
+    public Message(String content, ChatService origin) {
         this.content = content;
-        this.username = username;
         this.origin = origin;
     }
 
@@ -17,15 +15,11 @@ public class Message {
         return content;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public ChatService getOrigin() {
         return origin;
     }
 
     public String toString() {
-        return "<" + username + "> " + content;
+        return content;
     }
 }

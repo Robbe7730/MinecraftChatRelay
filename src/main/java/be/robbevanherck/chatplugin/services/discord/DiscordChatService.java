@@ -1,16 +1,15 @@
 package be.robbevanherck.chatplugin.services.discord;
 
 import be.robbevanherck.chatplugin.entities.Message;
+import be.robbevanherck.chatplugin.entities.PlayerMessage;
 import be.robbevanherck.chatplugin.repositories.PropertiesRepository;
 import be.robbevanherck.chatplugin.services.ChatService;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.minecraft.server.MinecraftServer;
 
 import javax.security.auth.login.LoginException;
-import java.util.EnumSet;
 
 public class DiscordChatService extends ChatService {
     @Override

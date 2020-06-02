@@ -1,12 +1,9 @@
 package be.robbevanherck.chatplugin.services.discord;
 
-import be.robbevanherck.chatplugin.entities.Message;
-import be.robbevanherck.chatplugin.services.MessageReceivedHandler;
+import be.robbevanherck.chatplugin.entities.PlayerMessage;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
-import java.util.Set;
 
 public class DiscordMessageListener extends ListenerAdapter {
     DiscordChatService parentService;
@@ -26,7 +23,7 @@ public class DiscordMessageListener extends ListenerAdapter {
             DiscordRepository.setChannel(channel);
             event.getMessage().delete().reason("This is my calling!").queue();
         } else {
-            Message message = new Message(
+            PlayerMessage message = new PlayerMessage(
                     event.getMessage().getAuthor().getName(),
                     event.getMessage().getContentDisplay(),
                     parentService

@@ -1,6 +1,6 @@
 package be.robbevanherck.chatplugin.mixin;
 
-import be.robbevanherck.chatplugin.entities.Message;
+import be.robbevanherck.chatplugin.entities.PlayerMessage;
 import be.robbevanherck.chatplugin.repositories.ChatServiceRepository;
 import be.robbevanherck.chatplugin.services.ChatService;
 import be.robbevanherck.chatplugin.services.minecraft.MinecraftChatService;
@@ -33,7 +33,7 @@ public abstract class ServerPlayNetworkHandlerMixin {
                 .findFirst();
         if (maybeMcService.isPresent()) {
             MinecraftChatService mcChatService = (MinecraftChatService) maybeMcService.get();
-            mcChatService.onMessageReceived(new Message(player.getDisplayName().asString(), packet.getChatMessage(), mcChatService));
+            mcChatService.onMessageReceived(new PlayerMessage(player.getDisplayName().asString(), packet.getChatMessage(), mcChatService));
         }
     }
 }

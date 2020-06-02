@@ -1,10 +1,9 @@
 package be.robbevanherck.chatplugin.services.minecraft;
 
 import be.robbevanherck.chatplugin.entities.Message;
+import be.robbevanherck.chatplugin.entities.PlayerMessage;
 import be.robbevanherck.chatplugin.services.ChatService;
-import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.PlayerManager;
 import net.minecraft.text.LiteralText;
 
 public class MinecraftChatService extends ChatService {
