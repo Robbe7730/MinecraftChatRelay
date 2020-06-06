@@ -1,19 +1,9 @@
 package be.robbevanherck.chatplugin.entities;
 
-import net.minecraft.server.network.ServerPlayerEntity;
-
-public class Player {
-    private final String displayName;
-
+public interface Player {
     /**
-     * Class for players
-     * @param displayName The name of the player
+     * Get the name of the player
+     * @return The name of the player
      */
-    public Player(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
+    String getDisplayName();
 }

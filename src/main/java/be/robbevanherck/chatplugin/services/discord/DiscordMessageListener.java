@@ -23,9 +23,13 @@ public class DiscordMessageListener extends ListenerAdapter {
             MessageChannel channel = event.getChannel();
             DiscordRepository.setChannel(channel);
             event.getMessage().delete().reason("This is my calling!").queue();
+
+            // TODO: remove this, this is temporary
+            DiscordPlayer player = new DiscordPlayer(event.getAuthor());
+            player.sendMessage(new ChatMessage(parentService.getDiscordBotPlayer(), "Thank you!"));
         } else {
             ChatMessage message = new ChatMessage(
-                    new Player(event.getMessage().getAuthor().getName()),
+                    new DiscordPlayer(event.getMessage().getAuthor()),
                     event.getMessage().getContentDisplay()
             );
             parentService.onMessageReceived(message, parentService);

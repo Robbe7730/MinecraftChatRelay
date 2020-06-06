@@ -17,11 +17,10 @@ import javax.security.auth.login.LoginException;
 public class DiscordChatService extends ChatService {
     protected static final Logger LOGGER = LogManager.getLogger();
     private JDA jda;
-    private Player discordBotPlayer;
+    private DiscordPlayer discordBotPlayer;
 
     @Override
     public void serverStarted(MinecraftServer server) {
-        discordBotPlayer = new Player("DiscordChatService");
         String token = (String) PropertiesRepository.getProperty("discord-token");
         try {
             JDABuilder builder = new JDABuilder(token);
@@ -33,6 +32,7 @@ public class DiscordChatService extends ChatService {
         } catch (LoginException e) {
             LOGGER.error("Could not setup Discord connection", e);
         }
+        discordBotPlayer = new DiscordPlayer(jda.getSelfUser());
 
         PlayerJoinCallback.EVENT.register((joinedPlayer) -> {
             if (DiscordRepository.getChannel() == null && joinedPlayer instanceof MessageablePlayer) {
@@ -65,5 +65,9 @@ public class DiscordChatService extends ChatService {
             return;
         }
         DiscordRepository.getChannel().sendMessage(message.toString()).queue();
+    }
+
+    public DiscordPlayer getDiscordBotPlayer() {
+        return discordBotPlayer;
     }
 }

@@ -1,14 +1,12 @@
 package be.robbevanherck.chatplugin.entities;
 
-public abstract class MessageablePlayer extends Player {
-
+/**
+ * Represents a player that can receive direct messages
+ */
+public interface MessageablePlayer extends Player {
     /**
-     * Represents a player that can be sent direct messages
-     * @param username the username of the player
+     * Send a direct message to this player
+     * @param message The message to send
      */
-    public MessageablePlayer(String username) {
-        super(username);
-    }
-
-    public abstract void sendMessage(ChatMessage message);
+    void sendMessage(ChatMessage message);
 }

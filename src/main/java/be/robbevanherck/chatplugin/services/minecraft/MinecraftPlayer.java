@@ -7,11 +7,10 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
-public class MinecraftPlayer extends MessageablePlayer {
+public class MinecraftPlayer implements MessageablePlayer {
     ServerPlayerEntity serverPlayerEntity;
 
     public MinecraftPlayer(ServerPlayerEntity serverPlayerEntity) {
-        super(serverPlayerEntity.getDisplayName().asString());
         this.serverPlayerEntity = serverPlayerEntity;
     }
 
@@ -21,5 +20,10 @@ public class MinecraftPlayer extends MessageablePlayer {
                 (new TranslatableText("commands.message.display.incoming", new LiteralText(message.getUsername()), new LiteralText(message.getContent())))
                         .formatted(Formatting.GRAY, Formatting.ITALIC)
         );
+    }
+
+    @Override
+    public String getDisplayName() {
+        return serverPlayerEntity.getDisplayName().asString();
     }
 }

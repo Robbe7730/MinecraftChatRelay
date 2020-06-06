@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "chatplugin",
-  "version": "0.1.1",
+  "version": "0.3.0",
 
   "name": "Chat Relay",
   "description": "Integrate a Minecraft server with a chatting application, like Discord",
