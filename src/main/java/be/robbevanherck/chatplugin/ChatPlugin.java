@@ -1,11 +1,9 @@
 package be.robbevanherck.chatplugin;
 
-import be.robbevanherck.chatplugin.commands.SendAllCommand;
 import be.robbevanherck.chatplugin.repositories.ChatServiceRepository;
 import be.robbevanherck.chatplugin.services.discord.DiscordChatService;
 import be.robbevanherck.chatplugin.services.minecraft.MinecraftChatService;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.fabricmc.fabric.api.event.server.ServerStopCallback;
 
@@ -25,8 +23,5 @@ public class ChatPlugin implements ModInitializer {
         ServerStopCallback.EVENT.register(server -> {
             ChatServiceRepository.getChatServices().forEach(service -> service.serverStopped(server));
         });
-
-        // Register the commands
-        CommandRegistrationCallback.EVENT.register(SendAllCommand::register);
     }
 }
