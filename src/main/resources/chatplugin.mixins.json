@@ -4,6 +4,7 @@
   "package": "be.robbevanherck.chatplugin.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "PlayerManagerMixin",
     "ServerPlayNetworkHandlerMixin"
   ],
   "injectors": {

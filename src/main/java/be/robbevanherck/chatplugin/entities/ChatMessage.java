@@ -1,22 +1,28 @@
 package be.robbevanherck.chatplugin.entities;
 
 import be.robbevanherck.chatplugin.services.ChatService;
+import be.robbevanherck.chatplugin.util.Player;
 
 public class ChatMessage extends Message {
-    String username;
+    Player player;
     ChatService origin;
 
-    public ChatMessage(String username, String content) {
+    /**
+     * A message from a player
+     * @param player The player sending the message
+     * @param content The contents of the message
+     */
+    public ChatMessage(Player player, String content) {
         super(content);
-        this.username = username;
+        this.player = player;
     }
 
     public String getUsername() {
-        return username;
+        return player.getDisplayName();
     }
 
     @Override
     public String toString() {
-        return "<" + username + "> " + content;
+        return "<" + getUsername() + "> " + content;
     }
 }

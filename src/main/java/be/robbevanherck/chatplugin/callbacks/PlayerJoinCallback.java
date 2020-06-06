@@ -1,6 +1,6 @@
 package be.robbevanherck.chatplugin.callbacks;
 
-import be.robbevanherck.chatplugin.entities.Message;
+import be.robbevanherck.chatplugin.util.Player;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
@@ -13,5 +13,5 @@ public interface PlayerJoinCallback {
             }
     );
 
-    void onPlayerJoin(Message message);
+    void onPlayerJoin(Player player);
 }

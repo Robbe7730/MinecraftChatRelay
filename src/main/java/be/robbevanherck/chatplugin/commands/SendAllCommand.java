@@ -2,6 +2,7 @@ package be.robbevanherck.chatplugin.commands;
 
 import be.robbevanherck.chatplugin.entities.ChatMessage;
 import be.robbevanherck.chatplugin.repositories.ChatServiceRepository;
+import be.robbevanherck.chatplugin.util.Player;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -14,13 +15,13 @@ public class SendAllCommand {
         commandDispatcher.register(CommandManager.literal("sendall").then(
                 CommandManager.argument("text", string()).executes(ctx -> {
                     ChatServiceRepository.getChatServices().forEach(chatService -> chatService.sendMessage(
-                            new ChatMessage("DefinitelyNotChatPlugin", getString(ctx, "text"))
+                            new ChatMessage(new Player("DefinitelyNotChatPlugin"), getString(ctx, "text"))
                     ));
                     return 1;
                 })
                 ).executes( ctx -> {
                     ChatServiceRepository.getChatServices().forEach(chatService -> chatService.sendMessage(
-                            new ChatMessage("ChatPlugin", "This is a test message")
+                            new ChatMessage(new Player("ChatPlugin"), "This is a test message")
                     ));
                     return 1;
                 }

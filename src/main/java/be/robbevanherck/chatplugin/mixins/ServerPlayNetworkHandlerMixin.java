@@ -3,6 +3,7 @@ package be.robbevanherck.chatplugin.mixins;
 import be.robbevanherck.chatplugin.callbacks.ChatMessageCallback;
 import be.robbevanherck.chatplugin.entities.ChatMessage;
 import be.robbevanherck.chatplugin.entities.Message;
+import be.robbevanherck.chatplugin.util.Player;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -18,13 +19,13 @@ public abstract class ServerPlayNetworkHandlerMixin {
     public ServerPlayerEntity player;
 
     /**
-     * Intercept a chat message and send it to the MinecraftChatService
+     * Intercept a chat message and notify the callback
      * @param packet The packet containing the chat message
      * @param ci Callback info provided by mixin
      */
     @Inject(method = "onChatMessage", at = @At(value="INVOKE", target = "net.minecraft.server.PlayerManager.broadcastChatMessage(Lnet/minecraft/text/Text;Z)V"))
-    private void onMessageBroadcast(ChatMessageC2SPacket packet, CallbackInfo ci) {
-        Message message = new ChatMessage(player.getDisplayName().asString(), packet.getChatMessage());
+    private void onChatMessage(ChatMessageC2SPacket packet, CallbackInfo ci) {
+        Message message = new ChatMessage(new Player(player), packet.getChatMessage());
         ChatMessageCallback.EVENT.invoker().onChatMessage(message);
     }
 }
