@@ -54,6 +54,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 }
 
 jar {
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 	from "LICENSE"
 }
 

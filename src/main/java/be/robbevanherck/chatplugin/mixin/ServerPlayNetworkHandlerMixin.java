@@ -18,7 +18,7 @@ import java.util.Optional;
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkHandlerMixin {
     @Shadow
-    ServerPlayerEntity player;
+    public ServerPlayerEntity player;
 
     /**
      * Intercept a chat message and send it to the MinecraftChatService
@@ -26,7 +26,7 @@ public abstract class ServerPlayNetworkHandlerMixin {
      * @param ci Callback info provided by mixin
      */
     //TODO: remove the * and figure out how this works
-    @Inject(method = "onChatMessage", at = @At(value="INVOKE", target = "net.minecraft.server.PlayerManager.broadcastChatMessage*"))
+    @Inject(method = "onChatMessage", at = @At(value="INVOKE", target = "net.minecraft.server.PlayerManager.broadcastChatMessage(Lnet/minecraft/text/Text;Z)V"))
     private void onMessageBroadcast(ChatMessageC2SPacket packet, CallbackInfo ci) {
         Optional<ChatService> maybeMcService = ChatServiceRepository.getChatServices().stream()
                 .filter(service -> service.getClass() == MinecraftChatService.class)
