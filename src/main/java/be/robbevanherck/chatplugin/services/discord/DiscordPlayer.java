@@ -4,6 +4,9 @@ import be.robbevanherck.chatplugin.entities.ChatMessage;
 import be.robbevanherck.chatplugin.entities.MessageablePlayer;
 import net.dv8tion.jda.api.entities.User;
 
+/**
+ * Player implementation for Discord users
+ */
 public class DiscordPlayer implements MessageablePlayer {
     private final User discordUser;
     /**

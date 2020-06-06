@@ -4,8 +4,16 @@ import be.robbevanherck.chatplugin.util.ConfigReader;
 
 import java.util.Properties;
 
+/**
+ * Repository for accessing the mods properties
+ */
 public class PropertiesRepository {
     private static Properties properties;
+
+    /**
+     * Private constructor to hide the implicit public one
+     */
+    private PropertiesRepository() {}
 
     /**
      * Get all chat services. Initializes chatServices when it is null

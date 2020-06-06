@@ -7,9 +7,16 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
+/**
+ * Player implementation for Minecraft players
+ */
 public class MinecraftPlayer implements MessageablePlayer {
     ServerPlayerEntity serverPlayerEntity;
 
+    /**
+     * Player implementation for Minecraft players
+     * @param serverPlayerEntity The Minecraft-player to base all data on
+     */
     public MinecraftPlayer(ServerPlayerEntity serverPlayerEntity) {
         this.serverPlayerEntity = serverPlayerEntity;
     }

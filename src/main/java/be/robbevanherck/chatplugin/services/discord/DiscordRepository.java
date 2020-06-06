@@ -2,7 +2,15 @@ package be.robbevanherck.chatplugin.services.discord;
 
 import net.dv8tion.jda.api.entities.MessageChannel;
 
+/**
+ * Repository for keeping the connected Discord channel
+ */
 public class DiscordRepository {
+    /**
+     * Private constructor to hide the implicit public one
+     */
+    private DiscordRepository() {}
+
     private static MessageChannel channel;
 
     /**

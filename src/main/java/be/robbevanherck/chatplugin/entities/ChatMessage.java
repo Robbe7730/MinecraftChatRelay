@@ -2,6 +2,9 @@ package be.robbevanherck.chatplugin.entities;
 
 import be.robbevanherck.chatplugin.services.ChatService;
 
+/**
+ * Representing a message that comes from a player
+ */
 public class ChatMessage extends Message {
     Player player;
     ChatService origin;

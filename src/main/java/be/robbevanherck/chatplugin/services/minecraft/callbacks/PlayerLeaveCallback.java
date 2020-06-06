@@ -4,6 +4,9 @@ import be.robbevanherck.chatplugin.entities.Player;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
+/**
+ * Callback handler for player leaving
+ */
 public interface PlayerLeaveCallback {
     Event<PlayerLeaveCallback> EVENT = EventFactory.createArrayBacked(PlayerLeaveCallback.class,
             (listeners) -> (message) -> {
@@ -13,5 +16,9 @@ public interface PlayerLeaveCallback {
             }
     );
 
+    /**
+     * Called on a player leaving
+     * @param player The player that left
+     */
     void onPlayerLeave(Player player);
 }

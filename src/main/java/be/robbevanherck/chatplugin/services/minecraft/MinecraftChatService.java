@@ -10,7 +10,10 @@ import be.robbevanherck.chatplugin.services.ChatService;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.LiteralText;
 
-public class MinecraftChatService extends ChatService {
+/**
+ * The ChatService implementation for Minecraft
+ */
+public class MinecraftChatService implements ChatService {
     MinecraftServer minecraftServer;
 
     @Override

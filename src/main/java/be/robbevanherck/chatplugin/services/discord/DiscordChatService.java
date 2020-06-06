@@ -14,7 +14,10 @@ import org.apache.logging.log4j.Logger;
 
 import javax.security.auth.login.LoginException;
 
-public class DiscordChatService extends ChatService {
+/**
+ * The ChatService implementation for Discord
+ */
+public class DiscordChatService implements ChatService {
     protected static final Logger LOGGER = LogManager.getLogger();
     private JDA jda;
     private DiscordPlayer discordBotPlayer;

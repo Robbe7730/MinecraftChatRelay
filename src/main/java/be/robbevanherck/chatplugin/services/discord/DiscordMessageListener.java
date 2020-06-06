@@ -1,14 +1,20 @@
 package be.robbevanherck.chatplugin.services.discord;
 
 import be.robbevanherck.chatplugin.entities.ChatMessage;
-import be.robbevanherck.chatplugin.entities.Player;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+/**
+ * JDA listener for Discord messages
+ */
 public class DiscordMessageListener extends ListenerAdapter {
     DiscordChatService parentService;
 
+    /**
+     * JDA listener for Discord messages
+     * @param parentService The DiscordChatService that created it and should be called back
+     */
     public DiscordMessageListener(DiscordChatService parentService) {
         this.parentService = parentService;
     }
@@ -23,10 +29,6 @@ public class DiscordMessageListener extends ListenerAdapter {
             MessageChannel channel = event.getChannel();
             DiscordRepository.setChannel(channel);
             event.getMessage().delete().reason("This is my calling!").queue();
-
-            // TODO: remove this, this is temporary
-            DiscordPlayer player = new DiscordPlayer(event.getAuthor());
-            player.sendMessage(new ChatMessage(parentService.getDiscordBotPlayer(), "Thank you!"));
         } else {
             ChatMessage message = new ChatMessage(
                     new DiscordPlayer(event.getMessage().getAuthor()),

@@ -7,6 +7,9 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.fabricmc.fabric.api.event.server.ServerStopCallback;
 
+/**
+ * The main entrypoint for the ChatPlugin
+ */
 public class ChatPlugin implements ModInitializer {
     @Override
     public void onInitialize() {
@@ -15,13 +18,9 @@ public class ChatPlugin implements ModInitializer {
         ChatServiceRepository.addChatService(new DiscordChatService());
 
         // Set a listener for server start
-        ServerStartCallback.EVENT.register(server -> {
-            ChatServiceRepository.getChatServices().forEach(service -> service.serverStarted(server));
-        });
+        ServerStartCallback.EVENT.register(server -> ChatServiceRepository.getChatServices().forEach(service -> service.serverStarted(server)));
 
         // Set a listener for server stop
-        ServerStopCallback.EVENT.register(server -> {
-            ChatServiceRepository.getChatServices().forEach(service -> service.serverStopped(server));
-        });
+        ServerStopCallback.EVENT.register(server -> ChatServiceRepository.getChatServices().forEach(service -> service.serverStopped(server)));
     }
 }

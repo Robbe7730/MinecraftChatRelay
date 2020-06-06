@@ -1,10 +1,8 @@
 package be.robbevanherck.chatplugin.mixins;
 
-import be.robbevanherck.chatplugin.entities.MessageablePlayer;
 import be.robbevanherck.chatplugin.services.minecraft.MinecraftPlayer;
 import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerJoinCallback;
 import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerLeaveCallback;
-import be.robbevanherck.chatplugin.entities.Player;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -13,6 +11,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * Mixin for the PlayerManager class
+ */
 @Mixin(PlayerManager.class)
 public class PlayerManagerMixin {
     /**

@@ -5,7 +5,15 @@ import be.robbevanherck.chatplugin.services.ChatService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repository for all ChatService-instances
+ */
 public class ChatServiceRepository {
+    /**
+     * Private constructor to hide the implicit public one
+     */
+    private ChatServiceRepository() {}
+
     private static List<ChatService> chatServices;
 
     /**

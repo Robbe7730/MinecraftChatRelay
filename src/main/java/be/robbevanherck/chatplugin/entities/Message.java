@@ -1,5 +1,8 @@
 package be.robbevanherck.chatplugin.entities;
 
+/**
+ * Abstract superclass for all messages
+ */
 public abstract class Message {
     String content;
 
