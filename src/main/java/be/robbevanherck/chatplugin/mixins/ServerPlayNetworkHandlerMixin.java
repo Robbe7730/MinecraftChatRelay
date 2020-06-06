@@ -1,6 +1,6 @@
-package be.robbevanherck.chatplugin.mixin;
+package be.robbevanherck.chatplugin.mixins;
 
-import be.robbevanherck.chatplugin.callback.ChatMessageCallback;
+import be.robbevanherck.chatplugin.callbacks.ChatMessageCallback;
 import be.robbevanherck.chatplugin.entities.ChatMessage;
 import be.robbevanherck.chatplugin.entities.Message;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;

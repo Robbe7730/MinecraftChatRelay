@@ -1,6 +1,6 @@
 package be.robbevanherck.chatplugin.services.minecraft;
 
-import be.robbevanherck.chatplugin.callback.ChatMessageCallback;
+import be.robbevanherck.chatplugin.callbacks.ChatMessageCallback;
 import be.robbevanherck.chatplugin.entities.Message;
 import be.robbevanherck.chatplugin.services.ChatService;
 import net.minecraft.server.MinecraftServer;
