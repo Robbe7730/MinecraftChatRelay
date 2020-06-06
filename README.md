@@ -1,5 +1,7 @@
 # Minecraft Chat Relay plugin
 
+![Java CI with Gradle](https://github.com/Robbe7730/MinecraftChatRelay/workflows/Java%20CI%20with%20Gradle/badge.svg)
+
 ## Introduction
 
 This plugin was originally written to be just a bridge between Discord and Minecraft chat, but has been written to be more expandable for platforms (forge, bukkit, fabric) as well as chatting applications (Discord, Slack, ...).
