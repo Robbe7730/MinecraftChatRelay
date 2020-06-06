@@ -1,6 +1,6 @@
 package be.robbevanherck.chatplugin.mixins;
 
-import be.robbevanherck.chatplugin.callbacks.PlayerDeathCallback;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerDeathCallback;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;

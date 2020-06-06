@@ -8,17 +8,13 @@ This plugin was originally written to be just a bridge between Discord and Minec
 
 ## Adding a chat service
 
-Simply create a new class extending ChatService and add it to ChatPlugin. That's it, all messages from other platforms will now be relayed to your newly implemented chat service.
+Simply create a new class extending ChatService and add it to ChatPlugin.
 
 ## Adding a platform
 
 This is still highly work in progress, currently it is only implemented for FabricMC, implementing for a new service _should_ be limited to re-implementing the mixins. What we need is a way to call the callbacks (that also need minor changes) and everything else shouldn't be platform-dependant.
 
 ## Project Structure
-
-### callbacks
-
-This package contains all the callbacks. In the FabricMC API these callbacks are also the listeners, so I've matched my implementation to theirs.
 
 ### commands
 
@@ -39,6 +35,8 @@ This package contains the different Data-repositories.
 ### services
 
 This package contains the different chat services. Currently Minecraft-chat and Discord are supported.
+
+The minecraft service also contains the callbacks that the mixins call.
 
 ### util
 

@@ -1,7 +1,6 @@
 package be.robbevanherck.chatplugin.entities;
 
 import be.robbevanherck.chatplugin.services.ChatService;
-import be.robbevanherck.chatplugin.util.Player;
 
 public class ChatMessage extends Message {
     Player player;

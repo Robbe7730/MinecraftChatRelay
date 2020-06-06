@@ -2,7 +2,7 @@ package be.robbevanherck.chatplugin.commands;
 
 import be.robbevanherck.chatplugin.entities.ChatMessage;
 import be.robbevanherck.chatplugin.repositories.ChatServiceRepository;
-import be.robbevanherck.chatplugin.util.Player;
+import be.robbevanherck.chatplugin.entities.Player;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;

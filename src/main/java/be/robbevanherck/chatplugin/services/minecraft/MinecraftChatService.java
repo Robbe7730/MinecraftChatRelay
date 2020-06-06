@@ -1,13 +1,12 @@
 package be.robbevanherck.chatplugin.services.minecraft;
 
-import be.robbevanherck.chatplugin.callbacks.ChatMessageCallback;
-import be.robbevanherck.chatplugin.callbacks.PlayerDeathCallback;
-import be.robbevanherck.chatplugin.callbacks.PlayerJoinCallback;
-import be.robbevanherck.chatplugin.callbacks.PlayerLeaveCallback;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.ChatMessageCallback;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerDeathCallback;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerJoinCallback;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerLeaveCallback;
 import be.robbevanherck.chatplugin.entities.Message;
 import be.robbevanherck.chatplugin.entities.SystemMessage;
 import be.robbevanherck.chatplugin.services.ChatService;
-import be.robbevanherck.chatplugin.util.Player;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.LiteralText;
 

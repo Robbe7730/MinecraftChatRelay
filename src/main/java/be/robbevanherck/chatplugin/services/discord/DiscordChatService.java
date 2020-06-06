@@ -1,8 +1,9 @@
 package be.robbevanherck.chatplugin.services.discord;
 
-import be.robbevanherck.chatplugin.entities.Message;
+import be.robbevanherck.chatplugin.entities.*;
 import be.robbevanherck.chatplugin.repositories.PropertiesRepository;
 import be.robbevanherck.chatplugin.services.ChatService;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerJoinCallback;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -16,9 +17,11 @@ import javax.security.auth.login.LoginException;
 public class DiscordChatService extends ChatService {
     protected static final Logger LOGGER = LogManager.getLogger();
     private JDA jda;
+    private Player discordBotPlayer;
 
     @Override
     public void serverStarted(MinecraftServer server) {
+        discordBotPlayer = new Player("DiscordChatService");
         String token = (String) PropertiesRepository.getProperty("discord-token");
         try {
             JDABuilder builder = new JDABuilder(token);
@@ -30,6 +33,16 @@ public class DiscordChatService extends ChatService {
         } catch (LoginException e) {
             LOGGER.error("Could not setup Discord connection", e);
         }
+
+        PlayerJoinCallback.EVENT.register((joinedPlayer) -> {
+            if (DiscordRepository.getChannel() == null && joinedPlayer instanceof MessageablePlayer) {
+                MessageablePlayer messageablePlayer = (MessageablePlayer) joinedPlayer;
+                messageablePlayer.sendMessage(new ChatMessage(
+                        discordBotPlayer,
+                        "Hello there, I seem to be disconnected from Discord. To set up a connection to Discord, please go to the right channel and type !setup. Thank you!"
+                ));
+            }
+        });
     }
 
     @Override

@@ -1,8 +1,10 @@
 package be.robbevanherck.chatplugin.mixins;
 
-import be.robbevanherck.chatplugin.callbacks.PlayerJoinCallback;
-import be.robbevanherck.chatplugin.callbacks.PlayerLeaveCallback;
-import be.robbevanherck.chatplugin.util.Player;
+import be.robbevanherck.chatplugin.entities.MessageablePlayer;
+import be.robbevanherck.chatplugin.services.minecraft.MinecraftPlayer;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerJoinCallback;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerLeaveCallback;
+import be.robbevanherck.chatplugin.entities.Player;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -21,7 +23,7 @@ public class PlayerManagerMixin {
      */
     @Inject(method="onPlayerConnect", at=@At(value="RETURN"))
     private void onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
-        PlayerJoinCallback.EVENT.invoker().onPlayerJoin(new Player(player));
+        PlayerJoinCallback.EVENT.invoker().onPlayerJoin(new MinecraftPlayer(player));
     }
     /**
      * Intercept a player leave event and notify the callback
@@ -30,6 +32,6 @@ public class PlayerManagerMixin {
      */
     @Inject(method="remove", at=@At(value="RETURN"))
     private void onPlayerConnect(ServerPlayerEntity player, CallbackInfo ci) {
-        PlayerLeaveCallback.EVENT.invoker().onPlayerLeave(new Player(player));
+        PlayerLeaveCallback.EVENT.invoker().onPlayerLeave(new MinecraftPlayer(player));
     }
 }

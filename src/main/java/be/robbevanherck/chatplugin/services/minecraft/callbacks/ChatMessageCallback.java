@@ -1,4 +1,4 @@
-package be.robbevanherck.chatplugin.callbacks;
+package be.robbevanherck.chatplugin.services.minecraft.callbacks;
 
 import be.robbevanherck.chatplugin.entities.Message;
 import net.fabricmc.fabric.api.event.Event;
