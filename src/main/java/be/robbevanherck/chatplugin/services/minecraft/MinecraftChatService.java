@@ -1,6 +1,7 @@
 package be.robbevanherck.chatplugin.services.minecraft;
 
 import be.robbevanherck.chatplugin.callbacks.ChatMessageCallback;
+import be.robbevanherck.chatplugin.callbacks.PlayerDeathCallback;
 import be.robbevanherck.chatplugin.callbacks.PlayerJoinCallback;
 import be.robbevanherck.chatplugin.callbacks.PlayerLeaveCallback;
 import be.robbevanherck.chatplugin.entities.Message;
@@ -19,6 +20,7 @@ public class MinecraftChatService extends ChatService {
         ChatMessageCallback.EVENT.register((message -> this.onMessageReceived(message, this)));
         PlayerJoinCallback.EVENT.register((player -> this.onMessageReceived(new SystemMessage(player.getDisplayName() + " joined the game"), this)));
         PlayerLeaveCallback.EVENT.register((player -> this.onMessageReceived(new SystemMessage(player.getDisplayName() + " left the game"), this)));
+        PlayerDeathCallback.EVENT.register((deathMessage -> this.onMessageReceived(new SystemMessage(deathMessage), this)));
     }
 
     @Override
