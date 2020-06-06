@@ -1,7 +1,7 @@
 package be.robbevanherck.chatplugin.services;
 
 import be.robbevanherck.chatplugin.entities.Message;
-import be.robbevanherck.chatplugin.entities.PlayerMessage;
+import be.robbevanherck.chatplugin.entities.ChatMessage;
 import be.robbevanherck.chatplugin.repositories.ChatServiceRepository;
 import net.minecraft.server.MinecraftServer;
 
@@ -20,9 +20,10 @@ public abstract class ChatService {
      * Forward a received message
      * @param message The message to be forwarded
      */
-    public void onMessageReceived(PlayerMessage message) {
-        ChatServiceRepository.getChatServices().stream()
-                .filter(service -> !message.getOrigin().equals(service))
+    public void onMessageReceived(Message message, ChatService origin) {
+        ChatServiceRepository.getChatServices()
+                .stream()
+                .filter(service -> !origin.equals(service))
                 .forEach(service -> service.sendMessage(message));
     }
 
