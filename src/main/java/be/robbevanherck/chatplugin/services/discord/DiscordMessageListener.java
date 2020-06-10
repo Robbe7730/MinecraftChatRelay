@@ -26,6 +26,12 @@ public class DiscordMessageListener extends ListenerAdapter {
         if (event.getMessage().getAuthor().isBot()) {
             return;
         }
+
+        // If we aren't connected to this channel, ignore the message
+        if (!event.getChannel().equals(DiscordRepository.getChannel())) {
+            return;
+        }
+
         DiscordPlayer player = new DiscordPlayer(event.getMessage().getAuthor());
         switch (event.getMessage().getContentDisplay()) {
             case "!setup":
