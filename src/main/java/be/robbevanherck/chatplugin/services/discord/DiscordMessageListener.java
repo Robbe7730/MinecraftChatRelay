@@ -32,7 +32,7 @@ public class DiscordMessageListener extends ListenerAdapter {
             return;
         }
 
-        DiscordPlayer player = new DiscordPlayer(event.getMessage().getAuthor());
+        DiscordPlayer player = DiscordPlayer.findOrCreate(event.getMessage().getAuthor());
         switch (event.getMessage().getContentDisplay()) {
             case "!setup":
                 MessageChannel channel = event.getChannel();

@@ -35,7 +35,8 @@ public class DiscordChatService implements ChatService {
         } catch (LoginException e) {
             LOGGER.error("Could not setup Discord connection", e);
         }
-        discordBotPlayer = new DiscordPlayer(jda.getSelfUser());
+
+        discordBotPlayer = DiscordPlayer.findOrCreate(jda.getSelfUser());
 
         PlayerJoinCallback.EVENT.register((joinedPlayer) -> {
             if (DiscordRepository.getChannel() == null && joinedPlayer instanceof MessageablePlayer) {

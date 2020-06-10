@@ -2,6 +2,7 @@ package be.robbevanherck.chatplugin.services.minecraft;
 
 import be.robbevanherck.chatplugin.entities.ChatMessage;
 import be.robbevanherck.chatplugin.entities.MessageablePlayer;
+import be.robbevanherck.chatplugin.repositories.PlayerRepository;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
@@ -17,7 +18,7 @@ public class MinecraftPlayer implements MessageablePlayer {
      * Player implementation for Minecraft players
      * @param serverPlayerEntity The Minecraft-player to base all data on
      */
-    public MinecraftPlayer(ServerPlayerEntity serverPlayerEntity) {
+    private MinecraftPlayer(ServerPlayerEntity serverPlayerEntity) {
         this.serverPlayerEntity = serverPlayerEntity;
     }
 
@@ -32,5 +33,25 @@ public class MinecraftPlayer implements MessageablePlayer {
     @Override
     public String getDisplayName() {
         return serverPlayerEntity.getDisplayName().asString();
+    }
+
+    @Override
+    public String getID() {
+        return "minecraft-" + serverPlayerEntity.getUuidAsString();
+    }
+
+    /**
+     * Find a player in the PlayerRepository or create and store one if it doesn't exist
+     * @param serverPlayerEntity The Minecraft-player user to base the Player on
+     * @return The player
+     */
+    public static MinecraftPlayer findOrCreate(ServerPlayerEntity serverPlayerEntity) {
+        MinecraftPlayer player = (MinecraftPlayer) PlayerRepository.getPlayer("minecraft-" + serverPlayerEntity.getUuidAsString());
+        if (player == null) {
+            player = new MinecraftPlayer(serverPlayerEntity);
+            PlayerRepository.addPlayer(player);
+        }
+
+        return player;
     }
 }

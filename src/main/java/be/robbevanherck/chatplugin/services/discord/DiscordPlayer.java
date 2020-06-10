@@ -4,6 +4,7 @@ import be.robbevanherck.chatplugin.entities.ChatMessage;
 import be.robbevanherck.chatplugin.entities.MessageablePlayer;
 import be.robbevanherck.chatplugin.entities.OnlineStatusPlayer;
 import be.robbevanherck.chatplugin.enums.OnlineStatus;
+import be.robbevanherck.chatplugin.repositories.PlayerRepository;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import org.apache.logging.log4j.LogManager;
@@ -20,8 +21,23 @@ public class DiscordPlayer implements MessageablePlayer, OnlineStatusPlayer {
      *
      * @param user The Discord user
      */
-    public DiscordPlayer(User user) {
+    private DiscordPlayer(User user) {
         discordUser = user;
+    }
+
+    /**
+     * Find a player in the PlayerRepository or create and store one if it doesn't exist
+     * @param user The Discord user to base the Player on
+     * @return The player corresponding to this User
+     */
+    public static DiscordPlayer findOrCreate(User user) {
+        DiscordPlayer player = (DiscordPlayer) PlayerRepository.getPlayer("discord-" + user.getId());
+        if (player == null) {
+            player = new DiscordPlayer(user);
+            PlayerRepository.addPlayer(player);
+        }
+
+        return player;
     }
 
     @Override
@@ -32,6 +48,11 @@ public class DiscordPlayer implements MessageablePlayer, OnlineStatusPlayer {
     @Override
     public String getDisplayName() {
         return discordUser.getName();
+    }
+
+    @Override
+    public String getID() {
+        return "discord-" + discordUser.getId();
     }
 
     @Override

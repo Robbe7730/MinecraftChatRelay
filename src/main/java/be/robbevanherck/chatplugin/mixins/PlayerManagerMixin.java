@@ -24,7 +24,7 @@ public class PlayerManagerMixin {
      */
     @Inject(method="onPlayerConnect", at=@At(value="RETURN"))
     private void onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
-        PlayerJoinCallback.EVENT.invoker().onPlayerJoin(new MinecraftPlayer(player));
+        PlayerJoinCallback.EVENT.invoker().onPlayerJoin(MinecraftPlayer.findOrCreate(player));
     }
     /**
      * Intercept a player leave event and notify the callback
@@ -33,6 +33,6 @@ public class PlayerManagerMixin {
      */
     @Inject(method="remove", at=@At(value="RETURN"))
     private void onPlayerConnect(ServerPlayerEntity player, CallbackInfo ci) {
-        PlayerLeaveCallback.EVENT.invoker().onPlayerLeave(new MinecraftPlayer(player));
+        PlayerLeaveCallback.EVENT.invoker().onPlayerLeave(MinecraftPlayer.findOrCreate(player));
     }
 }

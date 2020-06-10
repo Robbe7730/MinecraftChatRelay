@@ -31,7 +31,7 @@ public class ServerPlayNetworkHandlerMixin {
      */
     @Inject(method = "onChatMessage", at = @At(value="INVOKE", target = "net.minecraft.server.PlayerManager.broadcastChatMessage(Lnet/minecraft/text/Text;Z)V"))
     private void onChatMessage(ChatMessageC2SPacket packet, CallbackInfo ci) {
-        Message message = new ChatMessage(new MinecraftPlayer(player), packet.getChatMessage());
+        Message message = new ChatMessage(MinecraftPlayer.findOrCreate(player), packet.getChatMessage());
         ChatMessageCallback.EVENT.invoker().onChatMessage(message);
     }
 }
