@@ -27,8 +27,8 @@ public class DiscordMessageListener extends ListenerAdapter {
             return;
         }
 
-        // If we aren't connected to this channel, ignore the message
-        if (!event.getChannel().equals(DiscordRepository.getChannel())) {
+        // If we aren't connected to this channel, ignore the message, unless it's "!setup"
+        if (!event.getChannel().equals(DiscordRepository.getChannel()) && !event.getMessage().getContentDisplay().equals("!setup")) {
             return;
         }
 
