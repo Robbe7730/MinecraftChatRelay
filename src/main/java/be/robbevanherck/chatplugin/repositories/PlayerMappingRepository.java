@@ -1,6 +1,6 @@
 package be.robbevanherck.chatplugin.repositories;
 
-import be.robbevanherck.chatplugin.entities.Player;
+import be.robbevanherck.chatplugin.entities.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,38 +50,6 @@ public class PlayerMappingRepository {
     }
 
     /**
-     * Link 2 players
-     * @param player1 The first player
-     * @param player2 The second player
-     */
-    public static void linkPlayers(Player player1, Player player2) {
-        PlayerMapping player1Mapping = getMappingFor(player1);
-        PlayerMapping player2Mapping = getMappingFor(player2);
-        if (player1Mapping == null) {
-            if (player2Mapping == null) {
-                // Create a brand new set
-                String name = player1.getDisplayName() + "-" + random.nextInt(1000);
-                player1Mapping = new PlayerMapping(name);
-                player1Mapping.add(player1);
-                player1Mapping.add(player2);
-                namePlayerMappings.put(name, player2Mapping);
-            } else {
-                // Add player 1 to the set of player 2
-                player2Mapping.add(player1);
-            }
-        } else {
-            if (player2Mapping == null) {
-                // Add player 2 to the set of player 1
-                player1Mapping.add(player2);
-            } else {
-                // Remove player 1's linking and add its links to player 2's set
-                player2Mapping.addAll(player1Mapping);
-                namePlayerMappings.remove(player1Mapping.getHumanReadableName());
-            }
-        }
-    }
-
-    /**
      * Get a mapping from a name
      * @param name The name
      * @return The mapping with this name
@@ -95,6 +63,55 @@ public class PlayerMappingRepository {
             return null;
         }
         return playerMappings.get(0);
+    }
+
+    /**
+     * Add a player to a mapping found by the name of the mapping, calling chatCallback with the message to be sent to
+     * the requesting player.
+     * @param player The player to add
+     * @param name The name to find the mapping by
+     * @param chatCallback The callback to call with the message
+     * @return true if the request succeeded, false otherwise
+     */
+    public static boolean addPlayerToMappingByName(Player player, String name, ChatCallback chatCallback) {
+        PlayerMappingRepository.PlayerMapping mapping = PlayerMappingRepository.getMappingByName(name);
+        if (mapping == null) {
+            chatCallback.sendMessage("No such mapping: " + name, true);
+            return false;
+        } else {
+            if (mapping.contains(player)) {
+                chatCallback.sendMessage("You were already in " + name, false);
+                return false;
+            } else {
+                for (Player otherPlayer : mapping) {
+                    if (otherPlayer instanceof MessageablePlayer) {
+                        ((MessageablePlayer) otherPlayer).sendMessage(new ChatMessage(
+                                player,
+                                "Hi! I'm now linked to you."
+                        ));
+                    }
+                }
+                mapping.add(player);
+                chatCallback.sendMessage("You were added to " + name, false);
+                return true;
+            }
+        }
+    }
+
+    /**
+     * Create a new mapping for a player, not creating a new one when one already exists
+     * @param player The player in question
+     * @param chatCallback The callback to send a message
+     */
+    public static void createMappingForPlayerChecked(Player player, ChatCallback chatCallback) {
+        PlayerMappingRepository.PlayerMapping playerMapping = PlayerMappingRepository.getMappingFor(player);
+
+        if (playerMapping != null) {
+            chatCallback.sendMessage("You were already linked to " + playerMapping.getHumanReadableName(), false);
+        } else {
+            playerMapping = PlayerMappingRepository.addMappingForPlayer(player);
+            chatCallback.sendMessage("You are now linked to " + playerMapping.getHumanReadableName(), false);
+        }
     }
 
     /**
@@ -133,5 +150,18 @@ public class PlayerMappingRepository {
             result = 31 * result + humanReadableName.hashCode();
             return result;
         }
+    }
+
+    /**
+     * A callback to send a single message
+     */
+    @FunctionalInterface
+    public interface ChatCallback {
+        /**
+         * Send a message
+         * @param message The message
+         * @param isError Indicates if the message is an error message
+         */
+        void sendMessage(String message, boolean isError);
     }
 }

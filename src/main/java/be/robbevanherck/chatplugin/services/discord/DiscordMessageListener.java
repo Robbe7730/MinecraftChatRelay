@@ -1,8 +1,6 @@
 package be.robbevanherck.chatplugin.services.discord;
 
 import be.robbevanherck.chatplugin.entities.ChatMessage;
-import be.robbevanherck.chatplugin.entities.MessageablePlayer;
-import be.robbevanherck.chatplugin.entities.Player;
 import be.robbevanherck.chatplugin.entities.SystemMessage;
 import be.robbevanherck.chatplugin.enums.OnlineStatus;
 import be.robbevanherck.chatplugin.repositories.PlayerMappingRepository;
@@ -55,35 +53,13 @@ public class DiscordMessageListener extends ListenerAdapter {
                 break;
             case "!verify":
                 if (messageSplit.length != 2 || messageSplit[1].equals("")) {
-                    PlayerMappingRepository.PlayerMapping playerMapping = PlayerMappingRepository.getMappingFor(player);
-
-                    if (playerMapping != null) {
-                        parentService.sendMessage(new SystemMessage(event.getMessage().getAuthor().getAsMention() + " you are linked to " + playerMapping.getHumanReadableName()));
-                    } else {
-                        playerMapping = PlayerMappingRepository.addMappingForPlayer(player);
-                        parentService.sendMessage(new SystemMessage(event.getMessage().getAuthor().getAsMention() + " you were linked to " + playerMapping.getHumanReadableName()));
-                    }
-                    parentService.sendMessage(new SystemMessage("To link (for example) your Discord account, send \"!verify " + playerMapping.getHumanReadableName() + "\" in the right channel."));
+                    PlayerMappingRepository.createMappingForPlayerChecked(player, (message, isError) ->
+                            parentService.sendMessage(new SystemMessage(message))
+                    );
                 } else {
-                    PlayerMappingRepository.PlayerMapping mapping = PlayerMappingRepository.getMappingByName(messageSplit[1]);
-                    if (mapping == null) {
-                        parentService.sendMessage(new SystemMessage(event.getMessage().getAuthor().getAsMention() + " Whoops, no such mapping found"));
-                    } else {
-                        if (mapping.contains(player)) {
-                            parentService.sendMessage(new SystemMessage(event.getMessage().getAuthor().getAsMention() + " was already linked to " + mapping.getHumanReadableName()));
-                        } else {
-                            for (Player otherPlayer : mapping) {
-                                if (otherPlayer instanceof MessageablePlayer) {
-                                    ((MessageablePlayer) otherPlayer).sendMessage(new ChatMessage(
-                                            player,
-                                            "Hi! I'm now linked to you."
-                                    ));
-                                }
-                            }
-                            mapping.add(player);
-                            parentService.sendMessage(new SystemMessage(event.getMessage().getAuthor().getAsMention() + " is now linked to " + mapping.getHumanReadableName()));
-                        }
-                    }
+                    PlayerMappingRepository.addPlayerToMappingByName(player, messageSplit[1], (message, isError) ->
+                            parentService.sendMessage(new SystemMessage(message))
+                    );
                 }
                 break;
             default:
