@@ -1,6 +1,7 @@
 package be.robbevanherck.chatplugin.services.discord;
 
 import be.robbevanherck.chatplugin.entities.ChatMessage;
+import be.robbevanherck.chatplugin.enums.OnlineStatus;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -25,16 +26,26 @@ public class DiscordMessageListener extends ListenerAdapter {
         if (event.getMessage().getAuthor().isBot()) {
             return;
         }
-        if (event.getMessage().getContentDisplay().equals("!setup")) {
-            MessageChannel channel = event.getChannel();
-            DiscordRepository.setChannel(channel);
-            event.getMessage().delete().reason("This is my calling!").queue();
-        } else {
-            ChatMessage message = new ChatMessage(
-                    new DiscordPlayer(event.getMessage().getAuthor()),
-                    event.getMessage().getContentDisplay()
-            );
-            parentService.onMessageReceived(message, parentService);
+        DiscordPlayer player = new DiscordPlayer(event.getMessage().getAuthor());
+        switch (event.getMessage().getContentDisplay()) {
+            case "!setup":
+                MessageChannel channel = event.getChannel();
+                DiscordRepository.setChannel(channel, event.getGuild());
+                event.getMessage().delete().reason("This is my calling!").queue();
+                break;
+            case "!online":
+                player.setOnlineStatus(OnlineStatus.ONLINE);
+                break;
+            case "!offline":
+                player.setOnlineStatus(OnlineStatus.OFFLINE);
+                break;
+            default:
+                ChatMessage message = new ChatMessage(
+                        player,
+                        event.getMessage().getContentDisplay()
+                );
+                parentService.onMessageReceived(message, parentService);
+                break;
         }
     }
 }

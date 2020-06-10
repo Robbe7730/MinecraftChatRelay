@@ -51,7 +51,7 @@ public class DiscordChatService implements ChatService {
     @Override
     public void serverStopped(MinecraftServer server) {
         if (DiscordRepository.getChannel() != null) {
-            DiscordRepository.setChannel(null);
+            DiscordRepository.setChannel(null, null);
         }
         jda.shutdown();
 
