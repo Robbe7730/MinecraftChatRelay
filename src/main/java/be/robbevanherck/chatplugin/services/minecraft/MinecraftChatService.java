@@ -7,7 +7,9 @@ import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerLeaveCallb
 import be.robbevanherck.chatplugin.entities.Message;
 import be.robbevanherck.chatplugin.entities.SystemMessage;
 import be.robbevanherck.chatplugin.services.ChatService;
+import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
 
 /**
@@ -35,5 +37,10 @@ public class MinecraftChatService implements ChatService {
         if (this.minecraftServer != null) {
             this.minecraftServer.getPlayerManager().sendToAll(new LiteralText(message.toString()));
         }
+    }
+
+    @Override
+    public void registerCommands(CommandDispatcher<ServerCommandSource> commandDispatcher, boolean dedicatedServer) {
+        MinecraftVerifyCommand.register(commandDispatcher);
     }
 }

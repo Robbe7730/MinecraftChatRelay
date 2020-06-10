@@ -1,13 +1,16 @@
 package be.robbevanherck.chatplugin.services.discord;
 
 import be.robbevanherck.chatplugin.entities.*;
+import be.robbevanherck.chatplugin.enums.OnlineStatus;
 import be.robbevanherck.chatplugin.repositories.PropertiesRepository;
 import be.robbevanherck.chatplugin.services.ChatService;
 import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerJoinCallback;
+import com.mojang.brigadier.CommandDispatcher;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.command.ServerCommandSource;
 import okhttp3.OkHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,6 +41,8 @@ public class DiscordChatService implements ChatService {
 
         discordBotPlayer = DiscordPlayer.findOrCreate(jda.getSelfUser());
 
+        discordBotPlayer.setOnlineStatus(OnlineStatus.OFFLINE);
+
         PlayerJoinCallback.EVENT.register((joinedPlayer) -> {
             if (DiscordRepository.getChannel() == null && joinedPlayer instanceof MessageablePlayer) {
                 MessageablePlayer messageablePlayer = (MessageablePlayer) joinedPlayer;
@@ -56,6 +61,8 @@ public class DiscordChatService implements ChatService {
         }
         jda.shutdown();
 
+        discordBotPlayer.setOnlineStatus(OnlineStatus.OFFLINE);
+
         // Force the HTTP/2 clients to close
         OkHttpClient client = jda.getHttpClient();
         client.connectionPool().evictAll();
@@ -71,7 +78,7 @@ public class DiscordChatService implements ChatService {
         DiscordRepository.getChannel().sendMessage(message.toString()).queue();
     }
 
-    public DiscordPlayer getDiscordBotPlayer() {
-        return discordBotPlayer;
-    }
+    // This doesn't create any commands
+    @Override
+    public void registerCommands(CommandDispatcher<ServerCommandSource> commandDispatcher, boolean dedicatedServer) {}
 }

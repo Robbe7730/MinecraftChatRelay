@@ -4,10 +4,7 @@ import be.robbevanherck.chatplugin.entities.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -20,7 +17,7 @@ public class PlayerMappingRepository {
      */
     private PlayerMappingRepository() {}
 
-    private static final Set<PlayerMapping> playerEqualitySets = new HashSet<>();
+    private static final Map<String, PlayerMapping> namePlayerMappings = new HashMap<>();
     private static final Random random = new Random();
 
     /**
@@ -29,11 +26,27 @@ public class PlayerMappingRepository {
      * @return The set of players that are linked to this player (including the player himself)
      */
     public static PlayerMapping getMappingFor(Player player) {
-        List<PlayerMapping> playerMappings = playerEqualitySets.stream().filter(players -> players.contains(player)).collect(Collectors.toList());
+        List<PlayerMapping> playerMappings = namePlayerMappings.values().stream().filter(players -> players.contains(player)).collect(Collectors.toList());
         if (playerMappings.size() > 1) {
             LOGGER.error("More than 1 equality set found for player {}", player.getID());
         }
+        if (playerMappings.isEmpty()) {
+            return null;
+        }
         return playerMappings.get(0);
+    }
+
+    /**
+     * Add a new mapping for one player
+     * @param player The player to make the mapping for
+     * @return The newly created PlayerMapping
+     */
+    public static PlayerMapping addMappingForPlayer(Player player) {
+        String name = player.getDisplayName() + "-" + random.nextInt(1000);
+        PlayerMapping ret = new PlayerMapping(name);
+        ret.add(player);
+        namePlayerMappings.put(name, ret);
+        return ret;
     }
 
     /**
@@ -47,10 +60,11 @@ public class PlayerMappingRepository {
         if (player1Mapping == null) {
             if (player2Mapping == null) {
                 // Create a brand new set
-                player1Mapping = new PlayerMapping(player1.getDisplayName() + " mapping " + random.nextInt(1000));
+                String name = player1.getDisplayName() + "-" + random.nextInt(1000);
+                player1Mapping = new PlayerMapping(name);
                 player1Mapping.add(player1);
                 player1Mapping.add(player2);
-                playerEqualitySets.add(player2Mapping);
+                namePlayerMappings.put(name, player2Mapping);
             } else {
                 // Add player 1 to the set of player 2
                 player2Mapping.add(player1);
@@ -62,14 +76,37 @@ public class PlayerMappingRepository {
             } else {
                 // Remove player 1's linking and add its links to player 2's set
                 player2Mapping.addAll(player1Mapping);
-                playerEqualitySets.remove(player1Mapping);
+                namePlayerMappings.remove(player1Mapping.getHumanReadableName());
             }
         }
     }
 
-    private static class PlayerMapping extends HashSet<Player> {
+    /**
+     * Get a mapping from a name
+     * @param name The name
+     * @return The mapping with this name
+     */
+    public static PlayerMapping getMappingByName(String name) {
+        List<PlayerMapping> playerMappings = namePlayerMappings.values().stream().filter(players -> players.getHumanReadableName().equals(name)).collect(Collectors.toList());
+        if (playerMappings.size() > 1) {
+            LOGGER.error("More than 1 equality set found for name {}", name);
+        }
+        if (playerMappings.isEmpty()) {
+            return null;
+        }
+        return playerMappings.get(0);
+    }
+
+    /**
+     * A mapping between players
+     */
+    public static class PlayerMapping extends HashSet<Player> {
         private final String humanReadableName;
 
+        /**
+         * Create a mapping, given a name
+         * @param humanReadableName The name to use for this mapping
+         */
         public PlayerMapping(String humanReadableName) {
             super();
             this.humanReadableName = humanReadableName;

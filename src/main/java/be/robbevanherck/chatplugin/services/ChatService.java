@@ -2,7 +2,9 @@ package be.robbevanherck.chatplugin.services;
 
 import be.robbevanherck.chatplugin.entities.Message;
 import be.robbevanherck.chatplugin.repositories.ChatServiceRepository;
+import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.command.ServerCommandSource;
 
 /**
  * Interface for all chat services
@@ -37,4 +39,11 @@ public interface ChatService {
      * @param message the message to be sent
      */
     void sendMessage(Message message);
+
+    /**
+     * Register the commands
+     * @param commandDispatcher The CommandDispatcher required to register commands
+     * @param dedicatedServer Is true if the server is a dedicated server
+     */
+    void registerCommands(CommandDispatcher<ServerCommandSource> commandDispatcher, boolean dedicatedServer);
 }
