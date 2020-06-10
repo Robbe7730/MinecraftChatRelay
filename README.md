@@ -16,10 +16,6 @@ This is still highly work in progress, currently it is only implemented for Fabr
 
 ## Project Structure
 
-### commands
-
-This package contains all the Minecraft-commands, mainly used for debugging. (currently only `/sendall <message>`) that sends `<message>` to all available platfroms.
-
 ### entities
 
 This package contains all the entities, not Minecraft-entities, but objects containing data. Creating separate classes for this instead of re-using the platform's classes makes it more abstract and easier to port.
