@@ -1,4 +1,4 @@
-package be.robbevanherck.chatplugin.mixins;
+package be.robbevanherck.chatplugin.internals.mixins;
 
 import be.robbevanherck.chatplugin.services.minecraft.MinecraftPlayer;
 import be.robbevanherck.chatplugin.services.minecraft.callbacks.ChatMessageCallback;

@@ -12,4 +12,10 @@ public interface OnlineStatusPlayer extends Player {
      * @param status The new status
      */
     void setOnlineStatus(OnlineStatus status);
+
+    /**
+     * Return the online status of this player
+     * @return The online status
+     */
+    OnlineStatus getOnlineStatus();
 }

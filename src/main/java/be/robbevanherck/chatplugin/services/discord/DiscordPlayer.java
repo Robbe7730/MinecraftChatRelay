@@ -10,12 +10,17 @@ import net.dv8tion.jda.api.entities.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.UUID;
+
 /**
  * Player implementation for Discord users
  */
 public class DiscordPlayer implements MessageablePlayer, OnlineStatusPlayer {
     protected static final Logger LOGGER = LogManager.getLogger();
     private final User discordUser;
+    private UUID uuid;
+    private OnlineStatus onlineStatus;
+
     /**
      * Represents a player that can be sent direct messages
      *
@@ -23,6 +28,7 @@ public class DiscordPlayer implements MessageablePlayer, OnlineStatusPlayer {
      */
     private DiscordPlayer(User user) {
         discordUser = user;
+        onlineStatus = OnlineStatus.OFFLINE;
     }
 
     /**
@@ -56,6 +62,14 @@ public class DiscordPlayer implements MessageablePlayer, OnlineStatusPlayer {
     }
 
     @Override
+    public UUID getUUID() {
+        if (this.uuid == null) {
+            this.uuid = UUID.randomUUID();
+        }
+        return uuid;
+    }
+
+    @Override
     public void setOnlineStatus(OnlineStatus status) {
         if (DiscordRepository.getChannel() == null) {
             LOGGER.warn("Trying to set online status while not being connected");
@@ -83,5 +97,11 @@ public class DiscordPlayer implements MessageablePlayer, OnlineStatusPlayer {
             default:
                 throw new UnsupportedOperationException("Unknown status: " + status.toString());
         }
+        this.onlineStatus = status;
+    }
+
+    @Override
+    public OnlineStatus getOnlineStatus() {
+        return onlineStatus;
     }
 }

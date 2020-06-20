@@ -3,6 +3,7 @@ package be.robbevanherck.chatplugin.services.discord;
 import be.robbevanherck.chatplugin.entities.ChatMessage;
 import be.robbevanherck.chatplugin.entities.SystemMessage;
 import be.robbevanherck.chatplugin.enums.OnlineStatus;
+import be.robbevanherck.chatplugin.internals.DisplayServicePlayerUtil;
 import be.robbevanherck.chatplugin.repositories.PlayerMappingRepository;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -44,6 +45,10 @@ public class DiscordMessageListener extends ListenerAdapter {
                 MessageChannel channel = event.getChannel();
                 DiscordRepository.setChannel(channel, event.getGuild());
                 event.getMessage().delete().reason("This is my calling!").queue();
+
+                // Update the player list
+                parentService.getOnlineStatusPlayer().setOnlineStatus(OnlineStatus.ONLINE);
+                DisplayServicePlayerUtil.getInstance().addToPlayerList(parentService);
                 break;
             case "!online":
                 player.setOnlineStatus(OnlineStatus.ONLINE);

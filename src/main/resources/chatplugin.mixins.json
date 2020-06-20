@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "be.robbevanherck.chatplugin.mixins",
+  "package": "be.robbevanherck.chatplugin.internals.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "PlayerManagerMixin",

@@ -1,5 +1,6 @@
 package be.robbevanherck.chatplugin;
 
+import be.robbevanherck.chatplugin.internals.DisplayServicePlayerUtil;
 import be.robbevanherck.chatplugin.repositories.ChatServiceRepository;
 import be.robbevanherck.chatplugin.services.discord.DiscordChatService;
 import be.robbevanherck.chatplugin.services.minecraft.MinecraftChatService;
@@ -17,6 +18,9 @@ public class ChatPlugin implements ModInitializer {
         // Add the chat services
         ChatServiceRepository.addChatService(new MinecraftChatService());
         ChatServiceRepository.addChatService(new DiscordChatService());
+
+        // Set a listener to setup DisplayServicePlayerUtil
+        ServerStartCallback.EVENT.register(DisplayServicePlayerUtil::createInstance);
 
         // Set a listener for server start
         ServerStartCallback.EVENT.register(server -> ChatServiceRepository.getChatServices().forEach(service -> service.serverStarted(server)));

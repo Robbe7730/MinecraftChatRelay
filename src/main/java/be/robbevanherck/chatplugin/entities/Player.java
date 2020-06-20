@@ -1,5 +1,7 @@
 package be.robbevanherck.chatplugin.entities;
 
+import java.util.UUID;
+
 /**
  * Interface for all Players (anything that can receive messages)
  */
@@ -16,6 +18,12 @@ public interface Player {
      * @return The unique ID
      */
     String getID();
+
+    /**
+     * Get the UUID of the player
+     * @return The UUID
+     */
+    UUID getUUID();
 
     // You'll also want a public static Player findOrCreate(...) that queries the PlayerRepository for a player with the given
     // arguments and creates and saves one if it doesn't exist

@@ -81,4 +81,9 @@ public class DiscordChatService implements ChatService {
     // This doesn't create any commands
     @Override
     public void registerCommands(CommandDispatcher<ServerCommandSource> commandDispatcher, boolean dedicatedServer) {}
+
+    @Override
+    public OnlineStatusPlayer getOnlineStatusPlayer() {
+        return discordBotPlayer;
+    }
 }

@@ -8,6 +8,8 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
+import java.util.UUID;
+
 /**
  * Player implementation for Minecraft players
  */
@@ -38,6 +40,11 @@ public class MinecraftPlayer implements MessageablePlayer {
     @Override
     public String getID() {
         return "minecraft-" + serverPlayerEntity.getUuidAsString();
+    }
+
+    @Override
+    public UUID getUUID() {
+        return this.serverPlayerEntity.getUuid();
     }
 
     /**

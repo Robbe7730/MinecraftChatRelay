@@ -1,5 +1,6 @@
 package be.robbevanherck.chatplugin.services.minecraft;
 
+import be.robbevanherck.chatplugin.entities.OnlineStatusPlayer;
 import be.robbevanherck.chatplugin.services.minecraft.callbacks.ChatMessageCallback;
 import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerDeathCallback;
 import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerJoinCallback;
@@ -42,5 +43,10 @@ public class MinecraftChatService implements ChatService {
     @Override
     public void registerCommands(CommandDispatcher<ServerCommandSource> commandDispatcher, boolean dedicatedServer) {
         MinecraftVerifyCommand.register(commandDispatcher);
+    }
+
+    @Override
+    public OnlineStatusPlayer getOnlineStatusPlayer() {
+        return null;
     }
 }
