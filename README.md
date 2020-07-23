@@ -20,9 +20,13 @@ This is still highly work in progress, currently it is only implemented for Fabr
 
 This package contains all the entities, not Minecraft-entities, but objects containing data. Creating separate classes for this instead of re-using the platform's classes makes it more abstract and easier to port.
 
-### mixins
+### enums
 
-FabricMC-specific. This package contians all the mixins that FabricMC uses.
+This package contains (as the name implies) the enums used in MinecraftChatRelay.
+
+### internals
+
+This contains all the Minecraft-internal classes, some of this may be reused, other things may need to be reimplemented for new platforms.
 
 ### repositories
 
