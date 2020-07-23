@@ -28,6 +28,8 @@ This package contains (as the name implies) the enums used in MinecraftChatRelay
 
 This contains all the Minecraft-internal classes, some of this may be reused, other things may need to be reimplemented for new platforms.
 
+The main distinction here is that this only contains commands related to MinecraftChatRelay itself, not the ChatService. This is why the `/verify` command is in `services.minecraft` and `/disable` is in `internals`. `/verify` is only used by the Minecraft chat service, but  `/disable` works for all chat services.
+
 ### repositories
 
 This package contains the different Data-repositories.

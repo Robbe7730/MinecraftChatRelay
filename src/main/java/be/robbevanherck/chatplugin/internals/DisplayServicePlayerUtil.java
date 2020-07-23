@@ -34,8 +34,21 @@ public class DisplayServicePlayerUtil {
      * @param service The service to update
      */
     public void addToPlayerList(ChatService service) {
-        ServerPlayerEntity spe = new ChatServiceServerPlayerEntity(server, service);
-        server.getPlayerManager().sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.ADD_PLAYER, spe));
+        if (service.getOnlineStatusPlayer() != null) {
+            ServerPlayerEntity spe = new ChatServiceServerPlayerEntity(server, service);
+            server.getPlayerManager().sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.ADD_PLAYER, spe));
+        }
+    }
+
+    /**
+     * Update the player list for a certain service
+     * @param service The service to update
+     */
+    public void removePlayerFromList(ChatService service) {
+        if (service.getOnlineStatusPlayer() != null) {
+            ServerPlayerEntity spe = new ChatServiceServerPlayerEntity(server, service);
+            server.getPlayerManager().sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.REMOVE_PLAYER, spe));
+        }
     }
 
     /**

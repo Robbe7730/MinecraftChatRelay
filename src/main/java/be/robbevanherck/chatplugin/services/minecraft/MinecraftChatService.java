@@ -16,7 +16,7 @@ import net.minecraft.text.LiteralText;
 /**
  * The ChatService implementation for Minecraft
  */
-public class MinecraftChatService implements ChatService {
+public class MinecraftChatService extends ChatService {
     MinecraftServer minecraftServer;
 
     @Override
@@ -26,6 +26,8 @@ public class MinecraftChatService implements ChatService {
         PlayerJoinCallback.EVENT.register((player -> this.onMessageReceived(new SystemMessage(player.getDisplayName() + " joined the game"), this)));
         PlayerLeaveCallback.EVENT.register((player -> this.onMessageReceived(new SystemMessage(player.getDisplayName() + " left the game"), this)));
         PlayerDeathCallback.EVENT.register((deathMessage -> this.onMessageReceived(new SystemMessage(deathMessage), this)));
+
+        this.enable();
     }
 
     @Override
@@ -48,5 +50,10 @@ public class MinecraftChatService implements ChatService {
     @Override
     public OnlineStatusPlayer getOnlineStatusPlayer() {
         return null;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Minecraft";
     }
 }

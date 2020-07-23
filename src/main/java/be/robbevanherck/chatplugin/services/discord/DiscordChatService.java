@@ -20,7 +20,7 @@ import javax.security.auth.login.LoginException;
 /**
  * The ChatService implementation for Discord
  */
-public class DiscordChatService implements ChatService {
+public class DiscordChatService extends ChatService {
     protected static final Logger LOGGER = LogManager.getLogger();
     private JDA jda;
     private DiscordPlayer discordBotPlayer;
@@ -37,6 +37,7 @@ public class DiscordChatService implements ChatService {
             jda.addEventListener(new DiscordMessageListener(this));
         } catch (LoginException e) {
             LOGGER.error("Could not setup Discord connection", e);
+            return;
         }
 
         discordBotPlayer = DiscordPlayer.findOrCreate(jda.getSelfUser());
@@ -52,6 +53,8 @@ public class DiscordChatService implements ChatService {
                 ));
             }
         });
+
+        this.enable();
     }
 
     @Override
@@ -85,5 +88,10 @@ public class DiscordChatService implements ChatService {
     @Override
     public OnlineStatusPlayer getOnlineStatusPlayer() {
         return discordBotPlayer;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Discord";
     }
 }
