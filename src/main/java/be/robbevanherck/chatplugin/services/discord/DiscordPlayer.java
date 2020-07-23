@@ -53,7 +53,15 @@ public class DiscordPlayer implements MessageablePlayer, OnlineStatusPlayer {
 
     @Override
     public String getDisplayName() {
-        return discordUser.getName();
+        if (DiscordRepository.getGuild() == null ||
+                DiscordRepository.getGuild().getMember(discordUser) == null ||
+                DiscordRepository.getGuild().getMember(discordUser).getNickname() == null) {
+            // If we aren't connected, the user is not in the connected guild or we have no nickname, return the global username
+            return discordUser.getName();
+        }
+
+        // Otherwise, find the nickname of the bot in the guild and use that
+        return DiscordRepository.getGuild().getMember(discordUser).getNickname();
     }
 
     @Override
@@ -71,7 +79,7 @@ public class DiscordPlayer implements MessageablePlayer, OnlineStatusPlayer {
 
     @Override
     public void setOnlineStatus(OnlineStatus status) {
-        if (DiscordRepository.getChannel() == null) {
+        if (DiscordRepository.getChannel() == null || DiscordRepository.getGuild() == null) {
             LOGGER.warn("Trying to set online status while not being connected");
             return;
         }
