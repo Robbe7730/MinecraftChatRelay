@@ -29,12 +29,10 @@ public class DiscordChatService extends ChatService {
     public void serverStarted(MinecraftServer server) {
         String token = (String) PropertiesRepository.getProperty("discord-token");
         try {
-            JDABuilder builder = new JDABuilder(token);
-            builder.setActivity(Activity.playing("Minecraft: " + server.getServerMotd()));
-
-            jda = builder.build();
-
-            jda.addEventListener(new DiscordMessageListener(this));
+            jda = JDABuilder.createLight(token)
+                                 .setActivity(Activity.playing("Minecraft: " + server.getServerMotd()))
+                                 .addEventListeners(new DiscordMessageListener(this))
+                                 .build();
         } catch (LoginException e) {
             LOGGER.error("Could not setup Discord connection", e);
             return;

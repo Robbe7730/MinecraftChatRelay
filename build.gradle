@@ -20,7 +20,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Java Discord API without audio support
-	compile ('net.dv8tion:JDA:4.1.1_101') {
+	compile ('net.dv8tion:JDA:4.2.0_207') {
 		exclude module: 'opus-java'
 	}
 }
