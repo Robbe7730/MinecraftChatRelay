@@ -16,6 +16,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.security.auth.login.LoginException;
+import java.util.UUID;
+import java.util.concurrent.RejectedExecutionException;
 
 /**
  * The ChatService implementation for Discord
@@ -76,7 +78,12 @@ public class DiscordChatService extends ChatService {
             LOGGER.warn("Tried to send a message without connected channel.");
             return;
         }
-        DiscordRepository.getChannel().sendMessage(message.toString()).queue();
+
+        try {
+            DiscordRepository.getChannel().sendMessage(message.toString()).queue();
+        } catch (RejectedExecutionException ex) {
+            LOGGER.warn("Message sending failed...", ex);
+        }
     }
 
     // This doesn't create any commands

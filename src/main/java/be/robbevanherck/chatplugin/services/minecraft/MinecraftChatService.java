@@ -1,19 +1,20 @@
 package be.robbevanherck.chatplugin.services.minecraft;
 
 import be.robbevanherck.chatplugin.entities.OnlineStatusPlayer;
-import be.robbevanherck.chatplugin.services.minecraft.callbacks.ChatMessageCallback;
-import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerDeathCallback;
+import be.robbevanherck.chatplugin.entities.SystemMessage;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.MessageCallback;
+import be.robbevanherck.chatplugin.entities.Message;
+import be.robbevanherck.chatplugin.services.ChatService;
 import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerJoinCallback;
 import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerLeaveCallback;
-import be.robbevanherck.chatplugin.entities.Message;
-import be.robbevanherck.chatplugin.entities.SystemMessage;
-import be.robbevanherck.chatplugin.services.ChatService;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.network.MessageType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Util;
+
+import java.util.UUID;
 
 /**
  * The ChatService implementation for Minecraft
@@ -24,11 +25,7 @@ public class MinecraftChatService extends ChatService {
     @Override
     public void serverStarted(MinecraftServer server) {
         this.minecraftServer = server;
-        ChatMessageCallback.EVENT.register((message -> this.onMessageReceived(message, this)));
-        PlayerJoinCallback.EVENT.register((player -> this.onMessageReceived(new SystemMessage(player.getDisplayName() + " joined the game"), this)));
-        PlayerLeaveCallback.EVENT.register((player -> this.onMessageReceived(new SystemMessage(player.getDisplayName() + " left the game"), this)));
-        PlayerDeathCallback.EVENT.register((deathMessage -> this.onMessageReceived(new SystemMessage(deathMessage), this)));
-
+        MessageCallback.EVENT.register((message -> this.onMessageReceived(message, this)));;
         this.enable();
     }
 
@@ -40,7 +37,7 @@ public class MinecraftChatService extends ChatService {
     @Override
     public void sendMessage(Message message) {
         if (this.minecraftServer != null) {
-            this.minecraftServer.getPlayerManager().broadcastChatMessage(new LiteralText(message.toString()), MessageType.CHAT, Util.NIL_UUID);
+            this.minecraftServer.getPlayerManager().broadcastChatMessage(new LiteralText(message.toString()), MessageType.CHAT, getUUID());
         }
     }
 
@@ -57,5 +54,9 @@ public class MinecraftChatService extends ChatService {
     @Override
     public String getDisplayName() {
         return "Minecraft";
+    }
+
+    public static UUID getUUID() {
+        return UUID.fromString("44774637-78bb-4c66-a847-69b1a978c93c");
     }
 }

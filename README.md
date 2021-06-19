@@ -8,7 +8,7 @@ This plugin was originally written to be just a bridge between Discord and Minec
 
 ## Adding a chat service
 
-Simply create a new class extending ChatService and add it to ChatPlugin.
+Simply create a new class extending ChatService and add it to ChatPlugin. Note that every service is responsible for not forwarding its own messages.
 
 ## Adding a platform
 

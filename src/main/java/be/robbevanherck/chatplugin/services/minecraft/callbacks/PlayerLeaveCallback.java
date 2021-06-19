@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
 /**
- * Callback handler for player leaving
+ * Callback handler for player joining
  */
 public interface PlayerLeaveCallback {
     Event<PlayerLeaveCallback> EVENT = EventFactory.createArrayBacked(PlayerLeaveCallback.class,
@@ -17,8 +17,8 @@ public interface PlayerLeaveCallback {
     );
 
     /**
-     * Called on a player leaving
-     * @param player The player that left
+     * Called on a player join
+     * @param player The player that joined
      */
     void onPlayerLeave(Player player);
 }

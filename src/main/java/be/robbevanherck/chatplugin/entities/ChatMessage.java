@@ -20,7 +20,11 @@ public class ChatMessage extends Message {
     }
 
     public String getUsername() {
-        return player.getDisplayName();
+        if (player != null) {
+            return player.getDisplayName();
+        }
+
+        return "server";
     }
 
     @Override

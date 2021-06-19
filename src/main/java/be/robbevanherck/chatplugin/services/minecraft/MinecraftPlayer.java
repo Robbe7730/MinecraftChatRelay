@@ -7,7 +7,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Util;
 
 import java.util.UUID;
 
@@ -55,12 +54,22 @@ public class MinecraftPlayer implements MessageablePlayer {
      * @return The player
      */
     public static MinecraftPlayer findOrCreate(ServerPlayerEntity serverPlayerEntity) {
-        MinecraftPlayer player = (MinecraftPlayer) PlayerRepository.getPlayer("minecraft-" + serverPlayerEntity.getUuidAsString());
+        MinecraftPlayer player = findByUUID(serverPlayerEntity.getUuid());
+
         if (player == null) {
             player = new MinecraftPlayer(serverPlayerEntity);
             PlayerRepository.addPlayer(player);
         }
 
         return player;
+    }
+
+    /**
+     * Find a player in the PlayerRepository by UUID
+     * @param uuid The UUID to find the player on
+     * @return The player or null if no such player is found
+     */
+    public static MinecraftPlayer findByUUID(UUID uuid) {
+        return (MinecraftPlayer) PlayerRepository.getPlayer("minecraft-" + uuid.toString());
     }
 }
