@@ -10,7 +10,7 @@ import net.fabricmc.fabric.api.event.EventFactory;
 public interface MessageCallback {
     // On other platforms, Event and EventFactoy will not be available, but these are pretty trivial to implement
     Event<MessageCallback> EVENT = EventFactory.createArrayBacked(MessageCallback.class,
-            (listeners) -> (message) -> {
+            listeners -> message -> {
                 for (MessageCallback callback : listeners) {
                     callback.onMessage(message);
                 }

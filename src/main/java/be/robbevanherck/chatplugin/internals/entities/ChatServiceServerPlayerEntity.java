@@ -10,7 +10,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.text.LiteralText;
 import net.minecraft.world.GameMode;
-import net.minecraft.world.dimension.DimensionType;
 
 /**
  * A ServerPlayerEntity for a ChatService

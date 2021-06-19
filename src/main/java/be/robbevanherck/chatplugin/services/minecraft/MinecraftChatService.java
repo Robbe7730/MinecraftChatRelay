@@ -1,18 +1,14 @@
 package be.robbevanherck.chatplugin.services.minecraft;
 
-import be.robbevanherck.chatplugin.entities.OnlineStatusPlayer;
-import be.robbevanherck.chatplugin.entities.SystemMessage;
-import be.robbevanherck.chatplugin.services.minecraft.callbacks.MessageCallback;
 import be.robbevanherck.chatplugin.entities.Message;
+import be.robbevanherck.chatplugin.entities.OnlineStatusPlayer;
 import be.robbevanherck.chatplugin.services.ChatService;
-import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerJoinCallback;
-import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerLeaveCallback;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.MessageCallback;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.network.MessageType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
-import net.minecraft.util.Util;
 
 import java.util.UUID;
 
@@ -25,7 +21,7 @@ public class MinecraftChatService extends ChatService {
     @Override
     public void serverStarted(MinecraftServer server) {
         this.minecraftServer = server;
-        MessageCallback.EVENT.register((message -> this.onMessageReceived(message, this)));;
+        MessageCallback.EVENT.register((message -> this.onMessageReceived(message, this)));
         this.enable();
     }
 

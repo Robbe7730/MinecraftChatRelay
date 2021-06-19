@@ -8,8 +8,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 
-import java.util.UUID;
-
 /**
 * Superclass for all chat services
  */

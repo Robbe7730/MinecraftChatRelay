@@ -1,6 +1,9 @@
 package be.robbevanherck.chatplugin.services.discord;
 
-import be.robbevanherck.chatplugin.entities.*;
+import be.robbevanherck.chatplugin.entities.ChatMessage;
+import be.robbevanherck.chatplugin.entities.Message;
+import be.robbevanherck.chatplugin.entities.MessageablePlayer;
+import be.robbevanherck.chatplugin.entities.OnlineStatusPlayer;
 import be.robbevanherck.chatplugin.enums.OnlineStatus;
 import be.robbevanherck.chatplugin.repositories.PropertiesRepository;
 import be.robbevanherck.chatplugin.services.ChatService;
@@ -16,7 +19,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.security.auth.login.LoginException;
-import java.util.UUID;
 import java.util.concurrent.RejectedExecutionException;
 
 /**
@@ -44,7 +46,7 @@ public class DiscordChatService extends ChatService {
 
         discordBotPlayer.setOnlineStatus(OnlineStatus.OFFLINE);
 
-        PlayerJoinCallback.EVENT.register((joinedPlayer) -> {
+        PlayerJoinCallback.EVENT.register(joinedPlayer -> {
             if (DiscordRepository.getChannel() == null && joinedPlayer instanceof MessageablePlayer) {
                 MessageablePlayer messageablePlayer = (MessageablePlayer) joinedPlayer;
                 messageablePlayer.sendMessage(new ChatMessage(
@@ -86,9 +88,10 @@ public class DiscordChatService extends ChatService {
         }
     }
 
-    // This doesn't create any commands
     @Override
-    public void registerCommands(CommandDispatcher<ServerCommandSource> commandDispatcher, boolean dedicatedServer) {}
+    public void registerCommands(CommandDispatcher<ServerCommandSource> commandDispatcher, boolean dedicatedServer) {
+        // This doesn't create any commands
+    }
 
     @Override
     public OnlineStatusPlayer getOnlineStatusPlayer() {

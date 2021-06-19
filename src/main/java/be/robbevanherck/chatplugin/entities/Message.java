@@ -10,7 +10,7 @@ public abstract class Message {
      * An abstract class for all messages
      * @param content the content of the message
      */
-    public Message(String content) {
+    protected Message(String content) {
         this.content = content;
     }
 

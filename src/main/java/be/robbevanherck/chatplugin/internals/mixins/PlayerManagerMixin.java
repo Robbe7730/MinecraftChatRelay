@@ -1,6 +1,5 @@
 package be.robbevanherck.chatplugin.internals.mixins;
 
-import be.robbevanherck.chatplugin.entities.ChatMessage;
 import be.robbevanherck.chatplugin.entities.SystemMessage;
 import be.robbevanherck.chatplugin.internals.DisplayServicePlayerUtil;
 import be.robbevanherck.chatplugin.repositories.ChatServiceRepository;
