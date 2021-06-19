@@ -3,7 +3,7 @@ package be.robbevanherck.chatplugin.entities;
 import java.util.UUID;
 
 /**
- * Interface for all Players (anything that can receive messages)
+ * Interface for all Players (anything that can send messages)
  */
 public interface Player {
     /**

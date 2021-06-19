@@ -2,8 +2,12 @@ package be.robbevanherck.chatplugin.services.minecraft;
 
 import be.robbevanherck.chatplugin.entities.Message;
 import be.robbevanherck.chatplugin.entities.OnlineStatusPlayer;
+import be.robbevanherck.chatplugin.entities.Player;
+import be.robbevanherck.chatplugin.enums.OnlineStatus;
 import be.robbevanherck.chatplugin.services.ChatService;
 import be.robbevanherck.chatplugin.services.minecraft.callbacks.MessageCallback;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerJoinCallback;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerLeaveCallback;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.network.MessageType;
 import net.minecraft.server.MinecraftServer;
@@ -22,6 +26,16 @@ public class MinecraftChatService extends ChatService {
     public void serverStarted(MinecraftServer server) {
         this.minecraftServer = server;
         MessageCallback.EVENT.register((message -> this.onMessageReceived(message, this)));
+        PlayerJoinCallback.EVENT.register(player -> {
+            if (player instanceof OnlineStatusPlayer) {
+                ((OnlineStatusPlayer) player).setOnlineStatus(OnlineStatus.ONLINE);
+            }
+        });
+        PlayerLeaveCallback.EVENT.register(player -> {
+            if (player instanceof OnlineStatusPlayer) {
+                ((OnlineStatusPlayer) player).setOnlineStatus(OnlineStatus.OFFLINE);
+            }
+        });
         this.enable();
     }
 

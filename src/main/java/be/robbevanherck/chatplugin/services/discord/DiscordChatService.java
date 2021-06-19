@@ -1,13 +1,14 @@
 package be.robbevanherck.chatplugin.services.discord;
 
-import be.robbevanherck.chatplugin.entities.ChatMessage;
-import be.robbevanherck.chatplugin.entities.Message;
-import be.robbevanherck.chatplugin.entities.MessageablePlayer;
-import be.robbevanherck.chatplugin.entities.OnlineStatusPlayer;
+import be.robbevanherck.chatplugin.entities.*;
 import be.robbevanherck.chatplugin.enums.OnlineStatus;
+import be.robbevanherck.chatplugin.repositories.PlayerMappingRepository;
+import be.robbevanherck.chatplugin.repositories.PlayerRepository;
 import be.robbevanherck.chatplugin.repositories.PropertiesRepository;
 import be.robbevanherck.chatplugin.services.ChatService;
+import be.robbevanherck.chatplugin.services.minecraft.MinecraftPlayer;
 import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerJoinCallback;
+import be.robbevanherck.chatplugin.services.minecraft.callbacks.PlayerLeaveCallback;
 import com.mojang.brigadier.CommandDispatcher;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -53,6 +54,28 @@ public class DiscordChatService extends ChatService {
                         discordBotPlayer,
                         "Hello there, I seem to be disconnected from Discord. To set up a connection to Discord, please go to the right channel and type !setup. Thank you!"
                 ));
+            }
+        });
+
+        PlayerJoinCallback.EVENT.register(joinedPlayer -> {
+            PlayerMappingRepository.PlayerMapping mapping = PlayerMappingRepository.getMappingFor(joinedPlayer);
+            if (mapping != null) {
+                for (Player player : mapping) {
+                    if (player instanceof DiscordPlayer) {
+                        ((DiscordPlayer) player).setOnlineStatus(OnlineStatus.ONLINE);
+                    }
+                }
+            }
+        });
+
+        PlayerLeaveCallback.EVENT.register(leftPlayer -> {
+            PlayerMappingRepository.PlayerMapping mapping = PlayerMappingRepository.getMappingFor(leftPlayer);
+            if (mapping != null) {
+                for (Player player : mapping) {
+                    if (player instanceof DiscordPlayer) {
+                        ((DiscordPlayer) player).setOnlineStatus(OnlineStatus.OFFLINE);
+                    }
+                }
             }
         });
 

@@ -2,6 +2,8 @@ package be.robbevanherck.chatplugin.services.minecraft;
 
 import be.robbevanherck.chatplugin.entities.ChatMessage;
 import be.robbevanherck.chatplugin.entities.MessageablePlayer;
+import be.robbevanherck.chatplugin.entities.OnlineStatusPlayer;
+import be.robbevanherck.chatplugin.enums.OnlineStatus;
 import be.robbevanherck.chatplugin.repositories.PlayerRepository;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
@@ -13,8 +15,9 @@ import java.util.UUID;
 /**
  * Player implementation for Minecraft players
  */
-public class MinecraftPlayer implements MessageablePlayer {
+public class MinecraftPlayer implements MessageablePlayer, OnlineStatusPlayer {
     ServerPlayerEntity serverPlayerEntity;
+    OnlineStatus onlineStatus = OnlineStatus.OFFLINE;
 
     /**
      * Player implementation for Minecraft players
@@ -71,5 +74,15 @@ public class MinecraftPlayer implements MessageablePlayer {
      */
     public static MinecraftPlayer findByUUID(UUID uuid) {
         return (MinecraftPlayer) PlayerRepository.getPlayer("minecraft-" + uuid.toString());
+    }
+
+    @Override
+    public void setOnlineStatus(OnlineStatus status) {
+        this.onlineStatus = status;
+    }
+
+    @Override
+    public OnlineStatus getOnlineStatus() {
+        return this.onlineStatus;
     }
 }
