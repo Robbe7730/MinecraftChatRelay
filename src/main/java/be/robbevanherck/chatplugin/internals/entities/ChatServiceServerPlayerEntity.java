@@ -10,7 +10,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.text.LiteralText;
 import net.minecraft.world.GameMode;
-import net.minecraft.world.dimension.DimensionType;
 
 /**
  * A ServerPlayerEntity for a ChatService
@@ -26,9 +25,9 @@ public class ChatServiceServerPlayerEntity extends ServerPlayerEntity {
     public ChatServiceServerPlayerEntity(MinecraftServer server, ChatService service) {
         super(
                 server,
-                server.getWorld(DimensionType.OVERWORLD),
+                server.getOverworld(),
                 new GameProfile(service.getOnlineStatusPlayer().getUUID(), DisplayServicePlayerUtil.getInstance().shortString(service.getOnlineStatusPlayer().getDisplayName())),
-                new ServerPlayerInteractionManager(server.getWorld(DimensionType.OVERWORLD))
+                new ServerPlayerInteractionManager(server.getOverworld())
         );
         OnlineStatusPlayer onlineStatusPlayer = service.getOnlineStatusPlayer();
         // Give it the full name

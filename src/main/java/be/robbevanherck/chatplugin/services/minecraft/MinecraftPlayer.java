@@ -28,7 +28,8 @@ public class MinecraftPlayer implements MessageablePlayer {
     public void sendMessage(ChatMessage message) {
         this.serverPlayerEntity.sendMessage(
                 (new TranslatableText("commands.message.display.incoming", new LiteralText(message.getUsername()), new LiteralText(message.getContent())))
-                        .formatted(Formatting.GRAY, Formatting.ITALIC)
+                        .formatted(Formatting.GRAY, Formatting.ITALIC),
+                false
         );
     }
 
@@ -53,12 +54,22 @@ public class MinecraftPlayer implements MessageablePlayer {
      * @return The player
      */
     public static MinecraftPlayer findOrCreate(ServerPlayerEntity serverPlayerEntity) {
-        MinecraftPlayer player = (MinecraftPlayer) PlayerRepository.getPlayer("minecraft-" + serverPlayerEntity.getUuidAsString());
+        MinecraftPlayer player = findByUUID(serverPlayerEntity.getUuid());
+
         if (player == null) {
             player = new MinecraftPlayer(serverPlayerEntity);
             PlayerRepository.addPlayer(player);
         }
 
         return player;
+    }
+
+    /**
+     * Find a player in the PlayerRepository by UUID
+     * @param uuid The UUID to find the player on
+     * @return The player or null if no such player is found
+     */
+    public static MinecraftPlayer findByUUID(UUID uuid) {
+        return (MinecraftPlayer) PlayerRepository.getPlayer("minecraft-" + uuid.toString());
     }
 }

@@ -7,12 +7,12 @@ import net.fabricmc.fabric.api.event.EventFactory;
 /**
  * Callback handler for Minecraft chat messages
  */
-public interface ChatMessageCallback {
+public interface MessageCallback {
     // On other platforms, Event and EventFactoy will not be available, but these are pretty trivial to implement
-    Event<ChatMessageCallback> EVENT = EventFactory.createArrayBacked(ChatMessageCallback.class,
-            (listeners) -> (message) -> {
-                for (ChatMessageCallback callback : listeners) {
-                    callback.onChatMessage(message);
+    Event<MessageCallback> EVENT = EventFactory.createArrayBacked(MessageCallback.class,
+            listeners -> message -> {
+                for (MessageCallback callback : listeners) {
+                    callback.onMessage(message);
                 }
             }
     );
@@ -21,5 +21,5 @@ public interface ChatMessageCallback {
      * Called when a Minecraft-message is sent
      * @param message The message that was sent
      */
-    void onChatMessage(Message message);
+    void onMessage(Message message);
 }

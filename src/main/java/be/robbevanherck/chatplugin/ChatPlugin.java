@@ -9,8 +9,7 @@ import be.robbevanherck.chatplugin.services.minecraft.MinecraftChatService;
 import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.event.server.ServerStartCallback;
-import net.fabricmc.fabric.api.event.server.ServerStopCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.command.ServerCommandSource;
 
 /**
@@ -24,13 +23,13 @@ public class ChatPlugin implements ModInitializer {
         ChatServiceRepository.addChatService(new DiscordChatService());
 
         // Set a listener to setup DisplayServicePlayerUtil
-        ServerStartCallback.EVENT.register(DisplayServicePlayerUtil::createInstance);
+        ServerLifecycleEvents.SERVER_STARTED.register(DisplayServicePlayerUtil::createInstance);
 
         // Set a listener for server start
-        ServerStartCallback.EVENT.register(server -> ChatServiceRepository.getChatServices().forEach(service -> service.serverStarted(server)));
+        ServerLifecycleEvents.SERVER_STARTED.register(server -> ChatServiceRepository.getChatServices().forEach(service -> service.serverStarted(server)));
 
         // Set a listener for server stop
-        ServerStopCallback.EVENT.register(server -> ChatServiceRepository.getChatServices().forEach(service -> service.serverStopped(server)));
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> ChatServiceRepository.getChatServices().forEach(service -> service.serverStopped(server)));
 
         // Register internal commands
         CommandRegistrationCallback.EVENT.register(ChatPlugin::registerCommands);
