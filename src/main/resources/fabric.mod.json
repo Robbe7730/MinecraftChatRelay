@@ -1,18 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "chatplugin",
-  "version": "0.3.0",
+  "id": "minecraft-chat-relay",
 
-  "name": "Chat Relay",
-  "description": "Integrate a Minecraft server with a chatting application, like Discord",
+  "name": "Minecraft Chat Relay",
+  "description": "Fabric plugin for relaying between different chats (including Minecraft in-game chat) ",
   "authors": [
     "Robbe Van Herck"
   ],
   "contact": {
-    "sources": "https://github.com/Robbe7730/MinecraftChatRelay"
+    "email": "mincraftchatrelay@robbevanherck.be",
+    "sources": "https://github.com/Robbe7730/MinecraftChatRelay",
+    "issues": "https://github.com/Robbe7730/MinecraftChatRelay/issues"
+
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/chatplugin/icon.png",
 
   "environment": "server",
@@ -32,5 +34,6 @@
   },
   "suggests": {
     "flamingo": "*"
-  }
+  },
+  "version": "$version"
 }
