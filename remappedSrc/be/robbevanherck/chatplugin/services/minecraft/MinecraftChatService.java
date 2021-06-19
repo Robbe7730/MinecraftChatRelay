@@ -9,11 +9,9 @@ import be.robbevanherck.chatplugin.entities.Message;
 import be.robbevanherck.chatplugin.entities.SystemMessage;
 import be.robbevanherck.chatplugin.services.ChatService;
 import com.mojang.brigadier.CommandDispatcher;
-import net.minecraft.network.MessageType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
-import net.minecraft.util.Util;
 
 /**
  * The ChatService implementation for Minecraft
@@ -40,7 +38,7 @@ public class MinecraftChatService extends ChatService {
     @Override
     public void sendMessage(Message message) {
         if (this.minecraftServer != null) {
-            this.minecraftServer.getPlayerManager().broadcastChatMessage(new LiteralText(message.toString()), MessageType.CHAT, Util.NIL_UUID);
+            this.minecraftServer.getPlayerManager().sendToAll(new LiteralText(message.toString()));
         }
     }
 

@@ -26,9 +26,9 @@ public class ChatServiceServerPlayerEntity extends ServerPlayerEntity {
     public ChatServiceServerPlayerEntity(MinecraftServer server, ChatService service) {
         super(
                 server,
-                server.getOverworld(),
+                server.getWorld(DimensionType.OVERWORLD),
                 new GameProfile(service.getOnlineStatusPlayer().getUUID(), DisplayServicePlayerUtil.getInstance().shortString(service.getOnlineStatusPlayer().getDisplayName())),
-                new ServerPlayerInteractionManager(server.getOverworld())
+                new ServerPlayerInteractionManager(server.getWorld(DimensionType.OVERWORLD))
         );
         OnlineStatusPlayer onlineStatusPlayer = service.getOnlineStatusPlayer();
         // Give it the full name

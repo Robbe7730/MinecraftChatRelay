@@ -44,7 +44,8 @@ public class PlayerManagerMixin {
         PlayerLeaveCallback.EVENT.invoker().onPlayerLeave(MinecraftPlayer.findOrCreate(player));
     }
 
-    @Inject(method="onPlayerConnect", at=@At(value="INVOKE", target="Lnet/minecraft/server/network/ServerPlayerEntity;onSpawn()V"))
+    // Use method_18213, as player.networkHandler.sendPacket gets called too often
+    @Inject(method="onPlayerConnect", at=@At(value="INVOKE", target="Lnet/minecraft/server/world/ServerWorld;method_18213(Lnet/minecraft/server/network/ServerPlayerEntity;)V"))
     private void getPlayerList(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
         for (ChatService service : ChatServiceRepository.getEnabledChatServices()) {
             if (service.getOnlineStatusPlayer() != null) {

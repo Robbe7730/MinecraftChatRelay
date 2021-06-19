@@ -29,8 +29,8 @@ public class ServerPlayNetworkHandlerMixin {
      * @param packet The packet containing the chat message
      * @param ci Callback info provided by mixin
      */
-    @Inject(method = "onGameMessage", at = @At(value="INVOKE", target = "Lnet/minecraft/server/network/ServerPlayNetworkHandler;filterText(Ljava/lang/String;Ljava/util/function/Consumer;)V"))
-    private void onGameMessage(ChatMessageC2SPacket packet, CallbackInfo ci) {
+    @Inject(method = "onChatMessage", at = @At(value="INVOKE", target = "net.minecraft.server.PlayerManager.broadcastChatMessage(Lnet/minecraft/text/Text;Z)V"))
+    private void onChatMessage(ChatMessageC2SPacket packet, CallbackInfo ci) {
         Message message = new ChatMessage(MinecraftPlayer.findOrCreate(player), packet.getChatMessage());
         ChatMessageCallback.EVENT.invoker().onChatMessage(message);
     }

@@ -28,7 +28,7 @@ public abstract class ServerPlayerEntityMixin extends LivingEntity {
      * @param source (unused) The source that killed the player
      * @param ci Callback information
      */
-    @Inject(method="onDeath", at=@At(value="RETURN"))
+    @Inject(method="onDeath", at=@At(value="INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;getScoreboardTeam()Lnet/minecraft/scoreboard/AbstractTeam;"))
     private void onDeath(DamageSource source, CallbackInfo ci) {
         boolean deathMessagesEnabled = super.world.getGameRules().getBoolean(GameRules.SHOW_DEATH_MESSAGES);
         if (deathMessagesEnabled) {

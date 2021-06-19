@@ -7,7 +7,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Util;
 
 import java.util.UUID;
 
@@ -29,8 +28,7 @@ public class MinecraftPlayer implements MessageablePlayer {
     public void sendMessage(ChatMessage message) {
         this.serverPlayerEntity.sendMessage(
                 (new TranslatableText("commands.message.display.incoming", new LiteralText(message.getUsername()), new LiteralText(message.getContent())))
-                        .formatted(Formatting.GRAY, Formatting.ITALIC),
-                false
+                        .formatted(Formatting.GRAY, Formatting.ITALIC)
         );
     }
 
