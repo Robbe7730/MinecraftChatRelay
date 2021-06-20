@@ -6,6 +6,12 @@
 
 This plugin was originally written to be just a bridge between Discord and Minecraft chat, but has been written to be more expandable for platforms (forge, bukkit, fabric) as well as chatting applications (Discord, Slack, ...).
 
+## Running
+
+Installation can be done as any normal Fabric mod, except for the Discord service, which requires [JDA](https://github.com/DV8FromTheWorld/JDA) (currently version 4.3.0) in the classpath.
+
+Configuration can be done in `config/chatplugin.conf`. 
+
 ## Adding a chat service
 
 Simply create a new class extending ChatService and add it to ChatPlugin. Note that every service is responsible for not forwarding its own messages.
