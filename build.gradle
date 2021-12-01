@@ -26,7 +26,18 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	compileClasspath("net.dv8tion:JDA:4.3.0_277")
+        implementation "net.dv8tion:JDA:4.3.0_277"
+        include "net.dv8tion:JDA:4.3.0_277"
+        // There needs to be a better way to do this...
+        include "com.fasterxml.jackson.core:jackson-databind:2.10.1"
+        include "net.sf.trove4j:trove4j:3.0.3"
+        include "org.slf4j:slf4j-api:1.7.25"
+        include "org.apache.commons:commons-collections4:4.1"
+        include "com.squareup.okhttp3:okhttp:3.13.0"
+        include "com.squareup.okio:okio:1.17.2"
+        include "com.neovisionaries:nv-websocket-client:2.14"
+        include "com.fasterxml.jackson.core:jackson-annotations:2.10.1"
+        include "com.fasterxml.jackson.core:jackson-core:2.10.1"
 }
 
 processResources {
