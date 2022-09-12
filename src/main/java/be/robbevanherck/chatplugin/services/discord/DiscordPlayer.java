@@ -91,16 +91,16 @@ public class DiscordPlayer implements MessageablePlayer, OnlineStatusPlayer {
                     LOGGER.error("No \"online\" role in the guild");
                     return;
                 }
-                DiscordRepository.getGuild().addRoleToMember(discordUser.getId(), onlineRole).queue();
-                DiscordRepository.getGuild().removeRoleFromMember(discordUser.getId(), offlineRole).queue();
+                DiscordRepository.getGuild().addRoleToMember(discordUser, onlineRole).queue();
+                DiscordRepository.getGuild().removeRoleFromMember(discordUser, offlineRole).queue();
                 break;
             case OFFLINE:
                 if (offlineRole == null) {
                     LOGGER.error("No \"offline\" role in the guild");
                     return;
                 }
-                DiscordRepository.getGuild().addRoleToMember(discordUser.getId(), offlineRole).queue();
-                DiscordRepository.getGuild().removeRoleFromMember(discordUser.getId(), onlineRole).queue();
+                DiscordRepository.getGuild().addRoleToMember(discordUser, offlineRole).queue();
+                DiscordRepository.getGuild().removeRoleFromMember(discordUser, onlineRole).queue();
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown status: " + status.toString());

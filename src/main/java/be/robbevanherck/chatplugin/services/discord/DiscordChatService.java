@@ -13,6 +13,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import okhttp3.OkHttpClient;
@@ -34,7 +35,7 @@ public class DiscordChatService extends ChatService {
     public void serverStarted(MinecraftServer server) {
         String token = (String) PropertiesRepository.getProperty("discord-token");
         try {
-            jda = JDABuilder.createLight(token)
+            jda = JDABuilder.createLight(token, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES)
                                  .setActivity(Activity.playing("Minecraft: " + server.getServerMotd()))
                                  .addEventListeners(new DiscordMessageListener(this))
                                  .build();
